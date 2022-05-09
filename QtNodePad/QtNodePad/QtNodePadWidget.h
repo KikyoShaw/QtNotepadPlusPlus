@@ -38,6 +38,19 @@ private slots:
 	void sltActionSaveText();
 	//Áí´æÎª
 	void sltActionSaveOther();
+	//ÍË³ö
+	void sltActionExit();
+
+	//³·Ïú
+	void sltActionUndo();
+	//¼ôÇÐ
+	void sltActionCut();
+	//¸´ÖÆ
+	void sltActionCopy();
+	//Õ³Ìù
+	void sltActionPaste();
+	//É¾³ý
+	void sltActionDelete();
 
 protected:
 	virtual void showEvent(QShowEvent* e) override;

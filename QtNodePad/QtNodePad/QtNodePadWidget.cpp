@@ -54,6 +54,13 @@ QtNodePad::QtNodePad(QWidget *parent)
 	connect(ui.action_O, &QAction::triggered, this, &QtNodePad::sltActionOpenFile);
 	connect(ui.action_S, &QAction::triggered, this, &QtNodePad::sltActionSaveText);
 	connect(ui.action_A, &QAction::triggered, this, &QtNodePad::sltActionSaveOther);
+	connect(ui.action_C, &QAction::triggered, this, &QtNodePad::sltActionExit);
+
+	connect(ui.action_U_2, &QAction::triggered, this, &QtNodePad::sltActionUndo);
+	connect(ui.action_C_2, &QAction::triggered, this, &QtNodePad::sltActionCopy);
+	connect(ui.action_P_2, &QAction::triggered, this, &QtNodePad::sltActionPaste);
+	connect(ui.action_T, &QAction::triggered, this, &QtNodePad::sltActionCut);
+	connect(ui.action_L, &QAction::triggered, this, &QtNodePad::sltActionDelete);
 }
 
 QtNodePad::~QtNodePad()
@@ -155,6 +162,44 @@ void QtNodePad::sltActionSaveOther()
 	filePath = "";
 	if (!sltActionSaveFile())
 		filePath = temp;
+}
+
+void QtNodePad::sltActionExit()
+{
+	if (!askSaveFile())
+		return;
+
+	this->close();
+}
+
+void QtNodePad::sltActionUndo()
+{
+	ui.mainTextEdit->undo();
+}
+
+void QtNodePad::sltActionCut()
+{
+	ui.mainTextEdit->cut();
+}
+
+void QtNodePad::sltActionCopy()
+{
+	ui.mainTextEdit->copy();
+}
+
+void QtNodePad::sltActionPaste()
+{
+	ui.mainTextEdit->paste();
+}
+
+void QtNodePad::sltActionDelete()
+{
+	QTextCursor tc = ui.mainTextEdit->textCursor();
+	int pos = tc.position();
+	if (pos >= ui.mainTextEdit->toPlainText().length())
+		return;
+	tc.setPosition(pos + 1, QTextCursor::MoveMode::KeepAnchor);
+	tc.removeSelectedText();
 }
 
 void QtNodePad::showEvent(QShowEvent * e)
