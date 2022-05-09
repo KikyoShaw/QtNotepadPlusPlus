@@ -28,6 +28,10 @@ private:
 private slots:
 	bool sltActionSaveFile();
 
+protected:
+	virtual void showEvent(QShowEvent* e) override;
+	virtual void closeEvent(QCloseEvent* e) override;
+
 private:
     Ui::QtNodePadClass ui;
 	QSettings m_settings;

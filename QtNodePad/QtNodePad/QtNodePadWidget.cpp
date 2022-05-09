@@ -96,7 +96,7 @@ bool QtNodePad::askSaveFile()
 		return true;
 
 	// 有未保存的更改
-	int btn = QMessageBox::question(this, "记事本", "你想更改保存到 " + (fileName.isEmpty() ? "无标题" : fileName) + " 吗？", "保存(&S)", "不保存(&N)", "取消");
+	int btn = QMessageBox::question(this, "记事本", "是否保存到 " + (fileName.isEmpty() ? "无标题" : fileName) + " 吗？", "保存(&S)", "不保存(&N)", "取消");
 	if (btn == 2) // 取消
 		return false;
 	if (btn == 0) // 保存
@@ -104,6 +104,27 @@ bool QtNodePad::askSaveFile()
 		return sltActionSaveFile();
 	}
 	return true;
+}
+
+void QtNodePad::showEvent(QShowEvent * e)
+{
+	this->restoreGeometry(m_settings.value("QtNodePad/geometry").toByteArray());
+	this->restoreState(m_settings.value("QtNodePad/state").toByteArray());
+
+	QMainWindow::showEvent(e);
+}
+
+void QtNodePad::closeEvent(QCloseEvent * e)
+{
+	if (!askSaveFile())
+	{
+		e->ignore();
+		return;
+	}
+	m_settings.setValue("QtNodePad/geometry", this->saveGeometry());
+	m_settings.setValue("QtNodePad/state", this->saveState());
+
+	QMainWindow::closeEvent(e);
 }
 
 bool QtNodePad::sltActionSaveFile()
