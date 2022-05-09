@@ -28,6 +28,9 @@ private:
 private slots:
 	bool sltActionSaveFile();
 
+	//ÐÂ½¨
+	void sltActionNewCreate();
+
 protected:
 	virtual void showEvent(QShowEvent* e) override;
 	virtual void closeEvent(QCloseEvent* e) override;

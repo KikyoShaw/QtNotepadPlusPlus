@@ -46,6 +46,9 @@ QtNodePad::QtNodePad(QWidget *parent)
 	QFileIconProvider ip;
 	QIcon icon = ip.icon(QFileInfo("C:\\Windows\\System32\\notepad.exe"));
 	qApp->setWindowIcon(icon);
+
+	//²Ù×÷
+	connect(ui.action_N, &QAction::triggered, this, &QtNodePad::sltActionNewCreate);
 }
 
 QtNodePad::~QtNodePad()
@@ -104,6 +107,14 @@ bool QtNodePad::askSaveFile()
 		return sltActionSaveFile();
 	}
 	return true;
+}
+
+void QtNodePad::sltActionNewCreate()
+{
+	if (!askSaveFile())
+		return;
+
+	openFile("");
 }
 
 void QtNodePad::showEvent(QShowEvent * e)
