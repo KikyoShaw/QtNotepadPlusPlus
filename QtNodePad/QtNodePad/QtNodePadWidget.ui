@@ -1,28 +1,325 @@
-<UI version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>QtNodePadClass</class>
- <widget class="QMainWindow" name="QtNodePadClass" >
-  <property name="objectName" >
-   <string notr="true">QtNodePadClass</string>
-  </property>
-  <property name="geometry" >
+ <widget class="QMainWindow" name="QtNodePadClass">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>400</height>
+    <width>601</width>
+    <height>404</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>QtNodePad</string>
-  </property>  <widget class="QMenuBar" name="menuBar" />
-  <widget class="QToolBar" name="mainToolBar" />
-  <widget class="QWidget" name="centralWidget" />
-  <widget class="QStatusBar" name="statusBar" />
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QPlainTextEdit" name="mainTextEdit">
+      <property name="minimumSize">
+       <size>
+        <width>600</width>
+        <height>350</height>
+       </size>
+      </property>
+      <property name="contextMenuPolicy">
+       <enum>Qt::CustomContextMenu</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPlainTextEdit
+{
+	border: none;
+}</string>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOn</enum>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>601</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_F">
+    <property name="title">
+     <string>文件(&amp;F)</string>
+    </property>
+    <addaction name="action_N"/>
+    <addaction name="action_W"/>
+    <addaction name="action_O"/>
+    <addaction name="action_F"/>
+    <addaction name="action_S"/>
+    <addaction name="action_E"/>
+    <addaction name="action_A"/>
+    <addaction name="action_R"/>
+    <addaction name="action_C"/>
+    <addaction name="action_G"/>
+    <addaction name="separator"/>
+    <addaction name="action_U"/>
+    <addaction name="action_P"/>
+    <addaction name="separator"/>
+    <addaction name="action_X"/>
+   </widget>
+   <widget class="QMenu" name="menu_E">
+    <property name="title">
+     <string>编辑(&amp;E)</string>
+    </property>
+    <addaction name="action_U_2"/>
+    <addaction name="action_C_2"/>
+    <addaction name="action_P_2"/>
+    <addaction name="action_T"/>
+    <addaction name="action_L"/>
+    <addaction name="separator"/>
+    <addaction name="action_F_2"/>
+    <addaction name="action_N_2"/>
+    <addaction name="action_V"/>
+    <addaction name="action_Bing_2"/>
+    <addaction name="action_R_2"/>
+    <addaction name="action_G_2"/>
+    <addaction name="separator"/>
+    <addaction name="action_A_2"/>
+    <addaction name="action_D"/>
+   </widget>
+   <widget class="QMenu" name="menu_O">
+    <property name="title">
+     <string>格式(&amp;O)</string>
+    </property>
+    <addaction name="action_W_2"/>
+    <addaction name="action_F_3"/>
+   </widget>
+   <widget class="QMenu" name="menu_H">
+    <property name="title">
+     <string>帮助(&amp;H)</string>
+    </property>
+    <addaction name="action_H"/>
+    <addaction name="action_F_4"/>
+    <addaction name="action_A_3"/>
+   </widget>
+   <widget class="QMenu" name="menu_V">
+    <property name="title">
+     <string>查看(&amp;V)</string>
+    </property>
+    <addaction name="action_Z"/>
+    <addaction name="action_S_2"/>
+   </widget>
+   <widget class="QMenu" name="menu_T">
+    <property name="title">
+     <string>工具(&amp;T)</string>
+    </property>
+   </widget>
+   <addaction name="menu_F"/>
+   <addaction name="menu_E"/>
+   <addaction name="menu_O"/>
+   <addaction name="menu_T"/>
+   <addaction name="menu_V"/>
+   <addaction name="menu_H"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="action_N">
+   <property name="text">
+    <string>新建(&amp;N)</string>
+   </property>
+  </action>
+  <action name="action_O">
+   <property name="text">
+    <string>打开(&amp;O)</string>
+   </property>
+  </action>
+  <action name="action_F">
+   <property name="text">
+    <string>打开所在文件夹(&amp;F)</string>
+   </property>
+  </action>
+  <action name="action_W">
+   <property name="text">
+    <string>新建窗口(&amp;W)</string>
+   </property>
+  </action>
+  <action name="action_S">
+   <property name="text">
+    <string>保存(&amp;S)</string>
+   </property>
+  </action>
+  <action name="action_A">
+   <property name="text">
+    <string>另存为(&amp;A)</string>
+   </property>
+  </action>
+  <action name="action_U">
+   <property name="text">
+    <string>页面设置(&amp;U)</string>
+   </property>
+  </action>
+  <action name="action_P">
+   <property name="text">
+    <string>打印(&amp;P)</string>
+   </property>
+  </action>
+  <action name="action_X">
+   <property name="text">
+    <string>退出(&amp;X)</string>
+   </property>
+  </action>
+  <action name="action_C">
+   <property name="text">
+    <string>关闭(&amp;C)</string>
+   </property>
+  </action>
+  <action name="action_G">
+   <property name="text">
+    <string>全部关闭(&amp;G)</string>
+   </property>
+  </action>
+  <action name="action_E">
+   <property name="text">
+    <string>全部关保存(&amp;E)</string>
+   </property>
+  </action>
+  <action name="action_R">
+   <property name="text">
+    <string>重命名(&amp;R)</string>
+   </property>
+  </action>
+  <action name="action_U_2">
+   <property name="text">
+    <string>撤销(&amp;U)</string>
+   </property>
+  </action>
+  <action name="action_T">
+   <property name="text">
+    <string>剪切(&amp;T)</string>
+   </property>
+  </action>
+  <action name="action_C_2">
+   <property name="text">
+    <string>复制(&amp;C)</string>
+   </property>
+  </action>
+  <action name="action_P_2">
+   <property name="text">
+    <string>粘贴(&amp;P)</string>
+   </property>
+  </action>
+  <action name="action_L">
+   <property name="text">
+    <string>删除(&amp;L)</string>
+   </property>
+  </action>
+  <action name="action_F_2">
+   <property name="text">
+    <string>查找(&amp;F)</string>
+   </property>
+  </action>
+  <action name="action_N_2">
+   <property name="text">
+    <string>查找下一个(&amp;N)</string>
+   </property>
+  </action>
+  <action name="action_V">
+   <property name="text">
+    <string>查找上一个(&amp;V)</string>
+   </property>
+  </action>
+  <action name="action_Bing">
+   <property name="text">
+    <string>使用 Bing 搜索...</string>
+   </property>
+  </action>
+  <action name="action_R_2">
+   <property name="text">
+    <string>替换(&amp;R)</string>
+   </property>
+  </action>
+  <action name="action_G_2">
+   <property name="text">
+    <string>转到(&amp;G)</string>
+   </property>
+  </action>
+  <action name="action_Bing_2">
+   <property name="text">
+    <string>使用 Bing 搜索...</string>
+   </property>
+  </action>
+  <action name="action_D">
+   <property name="text">
+    <string>时间/日期(&amp;D)</string>
+   </property>
+  </action>
+  <action name="action_A_2">
+   <property name="text">
+    <string>全选(&amp;A)</string>
+   </property>
+  </action>
+  <action name="action_W_2">
+   <property name="text">
+    <string>自动换行(&amp;W)</string>
+   </property>
+  </action>
+  <action name="action_F_3">
+   <property name="text">
+    <string>字体(&amp;F)</string>
+   </property>
+  </action>
+  <action name="action_Z">
+   <property name="text">
+    <string>缩放(&amp;Z)</string>
+   </property>
+  </action>
+  <action name="action_S_2">
+   <property name="text">
+    <string>状态栏(&amp;S)</string>
+   </property>
+  </action>
+  <action name="action_H">
+   <property name="text">
+    <string>查看帮助(&amp;H)</string>
+   </property>
+  </action>
+  <action name="action_F_4">
+   <property name="text">
+    <string>发送反馈(&amp;F)</string>
+   </property>
+  </action>
+  <action name="action_A_3">
+   <property name="text">
+    <string>关于记事本(&amp;A)</string>
+   </property>
+  </action>
  </widget>
- <layoutDefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
+ <layoutdefault spacing="6" margin="11"/>
  <resources>
-   <include location="QtNodePad.qrc"/>
+  <include location="QtNodePad.qrc"/>
  </resources>
  <connections/>
-</UI>
+</ui>

@@ -5,3 +5,7 @@ QtNodePad::QtNodePad(QWidget *parent)
 {
     ui.setupUi(this);
 }
+
+QtNodePad::~QtNodePad()
+{
+}

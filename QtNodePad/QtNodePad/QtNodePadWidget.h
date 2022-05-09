@@ -9,6 +9,7 @@ class QtNodePad : public QMainWindow
 
 public:
     QtNodePad(QWidget *parent = Q_NULLPTR);
+	~QtNodePad();
 
 private:
     Ui::QtNodePadClass ui;
