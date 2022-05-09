@@ -51,6 +51,7 @@ QtNodePad::QtNodePad(QWidget *parent)
 	//²Ù×÷
 	connect(ui.action_N, &QAction::triggered, this, &QtNodePad::sltActionNewCreate);
 	connect(ui.action_W, &QAction::triggered, this, &QtNodePad::sltActionCreateWindow);
+	connect(ui.action_O, &QAction::triggered, this, &QtNodePad::sltActionOpenFile);
 }
 
 QtNodePad::~QtNodePad()
@@ -123,6 +124,19 @@ void QtNodePad::sltActionCreateWindow()
 {
 	QProcess pro(this);
 	pro.startDetached(QApplication::applicationFilePath(), { "-new" });
+}
+
+void QtNodePad::sltActionOpenFile()
+{
+	if (!askSaveFile())
+		return;
+
+	QString recentPath = m_settings.value("recent/filePath").toString();
+	QString path = QFileDialog::getOpenFileName(this, "´ò¿ª", recentPath, "*.txt");
+	if (path.isEmpty())
+		return;
+
+	openFile(path);
 }
 
 void QtNodePad::showEvent(QShowEvent * e)
