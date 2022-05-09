@@ -52,6 +52,7 @@ QtNodePad::QtNodePad(QWidget *parent)
 	connect(ui.action_N, &QAction::triggered, this, &QtNodePad::sltActionNewCreate);
 	connect(ui.action_W, &QAction::triggered, this, &QtNodePad::sltActionCreateWindow);
 	connect(ui.action_O, &QAction::triggered, this, &QtNodePad::sltActionOpenFile);
+	connect(ui.action_S, &QAction::triggered, this, &QtNodePad::sltActionSaveText);
 }
 
 QtNodePad::~QtNodePad()
@@ -137,6 +138,14 @@ void QtNodePad::sltActionOpenFile()
 		return;
 
 	openFile(path);
+}
+
+void QtNodePad::sltActionSaveText()
+{
+	if (!sltActionSaveFile())
+		QMessageBox::warning(this, "记事本", "保存失败！");
+	else
+		QMessageBox::information(this, "记事本", "保存成功！");
 }
 
 void QtNodePad::showEvent(QShowEvent * e)

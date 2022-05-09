@@ -34,6 +34,8 @@ private slots:
 	void sltActionCreateWindow();
 	//打开文本
 	void sltActionOpenFile();
+	//保存文本
+	void sltActionSaveText();
 
 protected:
 	virtual void showEvent(QShowEvent* e) override;
