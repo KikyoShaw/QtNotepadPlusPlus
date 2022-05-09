@@ -203,7 +203,7 @@
   </action>
   <action name="action_E">
    <property name="text">
-    <string>全部关保存(&amp;E)</string>
+    <string>全部保存(&amp;E)</string>
    </property>
   </action>
   <action name="action_R">

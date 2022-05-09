@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QTextStream>
+#include <QProcess>
 
 QtNodePad::QtNodePad(QWidget *parent)
     : QMainWindow(parent)
@@ -49,6 +50,7 @@ QtNodePad::QtNodePad(QWidget *parent)
 
 	//²Ù×÷
 	connect(ui.action_N, &QAction::triggered, this, &QtNodePad::sltActionNewCreate);
+	connect(ui.action_W, &QAction::triggered, this, &QtNodePad::sltActionCreateWindow);
 }
 
 QtNodePad::~QtNodePad()
@@ -115,6 +117,12 @@ void QtNodePad::sltActionNewCreate()
 		return;
 
 	openFile("");
+}
+
+void QtNodePad::sltActionCreateWindow()
+{
+	QProcess pro(this);
+	pro.startDetached(QApplication::applicationFilePath(), { "-new" });
 }
 
 void QtNodePad::showEvent(QShowEvent * e)

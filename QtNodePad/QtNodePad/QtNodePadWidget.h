@@ -30,6 +30,8 @@ private slots:
 
 	//新建
 	void sltActionNewCreate();
+	//新建窗口
+	void sltActionCreateWindow();
 
 protected:
 	virtual void showEvent(QShowEvent* e) override;
