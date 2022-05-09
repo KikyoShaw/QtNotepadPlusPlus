@@ -10,6 +10,27 @@ QtNodePad::QtNodePad(QWidget *parent)
 {
     ui.setupUi(this);
 
+	// 读取设置
+	if (!m_settings.value("wordWrap", true).toBool())
+	{
+		//ui->actionWord_Wrap_W->setChecked(false);
+		ui.mainTextEdit->setWordWrapMode(QTextOption::NoWrap);
+	}
+	if (!m_settings.value("statusBar", true).toBool())
+	{
+		this->statusBar()->hide();
+		//ui->actionStatus_Bar_S->setChecked(false);
+	}
+
+	// 恢复字体
+	QString fs;
+	if (!(fs = m_settings.value("font").toString()).isEmpty())
+	{
+		QFont f;
+		f.fromString(fs);
+		ui.mainTextEdit->setFont(f);
+	}
+
 	//底部工具化文本控件初始化
 	ui.statusBar->addPermanentWidget(new QLabel(this), 6);
 	m_posLabel = new QLabel("第 1 行，第 1 列", this);
@@ -34,7 +55,29 @@ QtNodePad::~QtNodePad()
 
 void QtNodePad::openFile(const QString & path)
 {
+	filePath = path;
 
+	if (path.isEmpty())
+	{
+		savedContent = "";
+		fileName = "无标题";
+	}
+	else
+	{
+		QFile file(path);
+		if (!file.exists())
+			return;
+
+		fileName = QFileInfo(path).baseName();
+
+		// 读取文件
+		if (!file.open(QIODevice::ReadOnly))
+			return;
+
+		savedContent = QString::fromLocal8Bit(file.readAll());
+	}
+	ui.mainTextEdit->setPlainText(savedContent);
+	updateWindowTitle();
 }
 
 bool QtNodePad::isModified() const
