@@ -73,9 +73,14 @@ private slots:
 	void sltActionFindPrev();
 
 	//输入法操作
-	void sltInputHandle();
+	void sltActionInputHandle();
 	//阅读顺序
-	void sltReadHandle();
+	void sltActionReadHandle();
+
+	//帮助
+	void sltActionHelp();
+	//主页
+	void sltActionGithub();
 
 protected:
 	virtual void showEvent(QShowEvent* e) override;

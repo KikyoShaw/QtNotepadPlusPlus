@@ -76,8 +76,11 @@ QtNodePad::QtNodePad(QWidget *parent)
 	connect(ui.action_N_2, &QAction::triggered, this, &QtNodePad::sltActionFindNext);
 	connect(ui.action_V, &QAction::triggered, this, &QtNodePad::sltActionFindPrev);
 
-	connect(ui.action_L_2, &QAction::triggered, this, &QtNodePad::sltInputHandle);
-	connect(ui.action_R_3, &QAction::triggered, this, &QtNodePad::sltReadHandle);
+	connect(ui.action_L_2, &QAction::triggered, this, &QtNodePad::sltActionInputHandle);
+	connect(ui.action_R_3, &QAction::triggered, this, &QtNodePad::sltActionReadHandle);
+
+	connect(ui.action_H, &QAction::triggered, this, &QtNodePad::sltActionHelp);
+	connect(ui.action_F_4, &QAction::triggered, this, &QtNodePad::sltActionGithub);
 }
 
 QtNodePad::~QtNodePad()
@@ -431,7 +434,7 @@ void QtNodePad::sltActionFindPrev()
 	}
 }
 
-void QtNodePad::sltInputHandle()
+void QtNodePad::sltActionInputHandle()
 {
 	if (ui.mainTextEdit->isReadOnly())
 	{
@@ -445,10 +448,20 @@ void QtNodePad::sltInputHandle()
 	}
 }
 
-void QtNodePad::sltReadHandle()
+void QtNodePad::sltActionReadHandle()
 {
 	auto direction = ui.action_R_3->isChecked() ? Qt::RightToLeft : Qt::LeftToRight;
 	ui.mainTextEdit->setLayoutDirection(direction);
+}
+
+void QtNodePad::sltActionHelp()
+{
+	QDesktopServices::openUrl(QUrl("https://github.com/KikyoShaw/QtNotepadPlusPlus"));
+}
+
+void QtNodePad::sltActionGithub()
+{
+	QDesktopServices::openUrl(QUrl("https://github.com/KikyoShaw"));
 }
 
 void QtNodePad::showEvent(QShowEvent * e)
