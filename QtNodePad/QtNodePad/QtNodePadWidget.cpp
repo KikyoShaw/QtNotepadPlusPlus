@@ -393,13 +393,16 @@ void QtNodePad::sltActionOpenFolder()
 		return;
 	}
 
-	QString pathStr = filePath.left(filePath.lastIndexOf("/"));
+	/*QString pathStr = filePath.left(filePath.lastIndexOf("/"));
 	pathStr.replace("/", "//");
 	bool ok = QDesktopServices::openUrl(QUrl(pathStr));
 	if (!ok)
 	{
 		QMessageBox::warning(this, "记事本", "打开文件所在文件夹失败！");
-	}
+	}*/
+	QString pathStr = filePath.replace("/", "\\");
+	QString cmd = QString("explorer.exe /select,\"%1\"").arg(pathStr);
+	QProcess::startDetached(cmd);
 }
 
 void QtNodePad::sltActionUndo()
