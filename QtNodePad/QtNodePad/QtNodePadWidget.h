@@ -36,7 +36,7 @@ private slots:
 	void sltPlainTextEditTextChanged();
 	void sltPlainTextEdiSelectionChanged();
 	void sltPlainTextEditUndoAvailable(bool ava);
-
+	void sltPlainTextEditCursorPositionChanged();
 
 	//ÐÂ½¨
 	void sltActionNewCreate();

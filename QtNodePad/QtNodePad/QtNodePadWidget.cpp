@@ -5,6 +5,7 @@
 #include <QTextStream>
 #include <QProcess>
 #include <QDesktopServices>
+#include <QTextBlock>
 #include "FindDialog.h"
 
 QtNodePad::QtNodePad(QWidget *parent)
@@ -54,6 +55,7 @@ QtNodePad::QtNodePad(QWidget *parent)
 	connect(ui.mainTextEdit, &QPlainTextEdit::selectionChanged, this, &QtNodePad::sltPlainTextEdiSelectionChanged);
 	connect(ui.mainTextEdit, &QPlainTextEdit::textChanged, this, &QtNodePad::sltPlainTextEditTextChanged);
 	connect(ui.mainTextEdit, &QPlainTextEdit::undoAvailable, this, &QtNodePad::sltPlainTextEditUndoAvailable);
+	connect(ui.mainTextEdit, &QPlainTextEdit::cursorPositionChanged, this, &QtNodePad::sltPlainTextEditCursorPositionChanged);
 
 	connect(ui.action_N, &QAction::triggered, this, &QtNodePad::sltActionNewCreate);
 	connect(ui.action_W, &QAction::triggered, this, &QtNodePad::sltActionCreateWindow);
@@ -215,6 +217,19 @@ void QtNodePad::sltPlainTextEdiSelectionChanged()
 void QtNodePad::sltPlainTextEditUndoAvailable(bool ava)
 {
 	ui.action_U_2->setEnabled(ava);
+}
+
+void QtNodePad::sltPlainTextEditCursorPositionChanged()
+{
+	QTextCursor tc = ui.mainTextEdit->textCursor();
+
+	QTextLayout* ly = tc.block().layout();
+	int posInBlock = tc.position() - tc.block().position(); // 当前光标在block内的相对位置
+	int line = ly->lineForTextPosition(posInBlock).lineNumber() + tc.block().firstLineNumber();
+
+	int col = tc.columnNumber(); // 第几列
+	// int row = tc.blockNumber(); // 第几段，无法识别WordWrap的第几行
+	m_posLabel->setText("第 " + QString::number(line + 1) + " 行，第 " + QString::number(col + 1) + " 列");
 }
 
 void QtNodePad::sltActionNewCreate()
