@@ -76,6 +76,7 @@ QtNodePad::QtNodePad(QWidget *parent)
 	connect(ui.action_N_2, &QAction::triggered, this, &QtNodePad::sltActionFindNext);
 	connect(ui.action_V, &QAction::triggered, this, &QtNodePad::sltActionFindPrev);
 	connect(ui.action_R_2, &QAction::triggered, this, &QtNodePad::sltActionReplace);
+	connect(ui.action_A_2, &QAction::triggered, this, &QtNodePad::sltActionSelectAll);
 
 	connect(ui.action_I, &QAction::triggered, this, &QtNodePad::sltActionZoomIn);
 	connect(ui.action_O_2, &QAction::triggered, this, &QtNodePad::sltActionZoomOut);
@@ -289,6 +290,10 @@ void QtNodePad::sltPlainTextEditCustomContextMenuRequested(const QPoint & p)
 	menu->addSeparator();
 	menu->addAction(ui.action_A_2);
 	menu->addSeparator();
+	menu->addAction(ui.action_I);
+	menu->addAction(ui.action_O_2);
+	menu->addAction(ui.action_R_4);
+	menu->addSeparator();
 	menu->addAction(ui.action_R_3);
 	menu->addAction(ui.action_Unicode_S);
 	menu->addMenu(insertUnicodeControlCharsMenu);
@@ -446,6 +451,11 @@ void QtNodePad::sltActionReplace()
 		createFindDialog();
 	}
 	m_findDialog->openFind(true);
+}
+
+void QtNodePad::sltActionSelectAll()
+{
+	ui.mainTextEdit->selectAll();
 }
 
 void QtNodePad::sltActionZoomIn()

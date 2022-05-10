@@ -74,6 +74,8 @@ private slots:
 
 	//替换
 	void sltActionReplace();
+	//全选
+	void sltActionSelectAll();
 
 	//放大
 	void sltActionZoomIn();
