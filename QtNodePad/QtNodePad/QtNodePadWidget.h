@@ -8,6 +8,7 @@
 #include "ui_QtNodePadWidget.h"
 
 class FindDialog;
+class RenameDialog;
 
 class QtNodePad : public QMainWindow
 {
@@ -27,11 +28,10 @@ private:
 	void updateWindowTitle();
 	bool askSaveFile();
 	void createFindDialog();
+	//文件保存
+	bool saveFile();
 
 private slots:
-	//文件保存
-	bool sltActionSaveFile();
-
 	//文本内容操作
 	void sltPlainTextEditTextChanged();
 	void sltPlainTextEdiSelectionChanged();
@@ -51,6 +51,8 @@ private slots:
 	void sltActionSaveOther();
 	//退出
 	void sltActionExit();
+	//重命名
+	void sltActionRename();
 
 	//撤销
 	void sltActionUndo();
@@ -126,4 +128,6 @@ private:
 
 	//搜索控件
 	FindDialog* m_findDialog = nullptr;
+	//重命名控件
+	RenameDialog *m_renameDialog = nullptr;
 };

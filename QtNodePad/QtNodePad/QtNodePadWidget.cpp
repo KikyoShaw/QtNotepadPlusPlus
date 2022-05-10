@@ -9,10 +9,11 @@
 #include <QDateTime>
 #include <QFontDialog>
 #include "FindDialog.h"
+#include "RenameDialog.h"
 
 QtNodePad::QtNodePad(QWidget *parent)
     : QMainWindow(parent)
-	, m_settings("NewNotePad")
+	, m_settings("NewNotePad"), fileName("无标题")
 {
     ui.setupUi(this);
 
@@ -53,6 +54,11 @@ QtNodePad::QtNodePad(QWidget *parent)
 	QIcon icon = ip.icon(QFileInfo("C:\\Windows\\System32\\notepad.exe"));
 	qApp->setWindowIcon(icon);
 
+	//最近操作的标题
+	filePath = m_settings.value("recent/filePath").toString();
+	fileName = QFileInfo(filePath).baseName();
+	updateWindowTitle();
+
 	//操作
 	connect(ui.mainTextEdit, &QPlainTextEdit::selectionChanged, this, &QtNodePad::sltPlainTextEdiSelectionChanged);
 	connect(ui.mainTextEdit, &QPlainTextEdit::textChanged, this, &QtNodePad::sltPlainTextEditTextChanged);
@@ -66,6 +72,7 @@ QtNodePad::QtNodePad(QWidget *parent)
 	connect(ui.action_S, &QAction::triggered, this, &QtNodePad::sltActionSaveText);
 	connect(ui.action_A, &QAction::triggered, this, &QtNodePad::sltActionSaveOther);
 	connect(ui.action_C, &QAction::triggered, this, &QtNodePad::sltActionExit);
+	connect(ui.action_R, &QAction::triggered, this, &QtNodePad::sltActionRename);
 
 	connect(ui.action_U_2, &QAction::triggered, this, &QtNodePad::sltActionUndo);
 	connect(ui.action_C_2, &QAction::triggered, this, &QtNodePad::sltActionCopy);
@@ -149,7 +156,7 @@ bool QtNodePad::askSaveFile()
 		return false;
 	if (btn == 0) // 保存
 	{
-		return sltActionSaveFile();
+		return saveFile();
 	}
 	return true;
 }
@@ -343,7 +350,7 @@ void QtNodePad::sltActionOpenFile()
 
 void QtNodePad::sltActionSaveText()
 {
-	if (!sltActionSaveFile())
+	if (!saveFile())
 		QMessageBox::warning(this, "记事本", "保存失败！");
 	else
 		QMessageBox::information(this, "记事本", "保存成功！");
@@ -353,7 +360,7 @@ void QtNodePad::sltActionSaveOther()
 {
 	QString temp = filePath;
 	filePath = "";
-	if (!sltActionSaveFile())
+	if (!saveFile())
 		filePath = temp;
 }
 
@@ -363,6 +370,18 @@ void QtNodePad::sltActionExit()
 		return;
 
 	this->close();
+}
+
+void QtNodePad::sltActionRename()
+{
+	if (m_renameDialog == nullptr) {
+		m_renameDialog = new RenameDialog(this);
+		connect(m_renameDialog, &RenameDialog::signalRename, this, [=](const QString &name) {
+			fileName = name;
+			updateWindowTitle();
+		});
+	}
+	m_renameDialog->showRenameDialog(fileName);
 }
 
 void QtNodePad::sltActionUndo()
@@ -607,10 +626,11 @@ void QtNodePad::closeEvent(QCloseEvent * e)
 	QMainWindow::closeEvent(e);
 }
 
-bool QtNodePad::sltActionSaveFile()
+bool QtNodePad::saveFile()
 {
-	if (filePath.isEmpty()) // 没有路径，另存为
-	{
+	//先判断文件是否存在
+	QFileInfo fileInfo(filePath);
+	if (!fileInfo.isFile()) {
 		QString recentPath = m_settings.value("recent/filePath").toString();
 		QString path = QFileDialog::getSaveFileName(this, "另存为", recentPath, "*.txt");
 		if (path.isEmpty())
@@ -619,7 +639,6 @@ bool QtNodePad::sltActionSaveFile()
 		filePath = path;
 		fileName = QFileInfo(path).baseName();
 	}
-
 	// 写出文件
 	QFile file(filePath);
 	if (!file.open(QIODevice::WriteOnly))
