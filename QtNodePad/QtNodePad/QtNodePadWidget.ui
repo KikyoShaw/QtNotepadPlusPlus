@@ -159,40 +159,64 @@
    <property name="text">
     <string>新建(&amp;N)</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
   </action>
   <action name="action_O">
    <property name="text">
     <string>打开(&amp;O)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
    </property>
   </action>
   <action name="action_F">
    <property name="text">
     <string>打开所在文件夹(&amp;F)</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+F</string>
+   </property>
   </action>
   <action name="action_W">
    <property name="text">
     <string>新建窗口(&amp;W)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+N</string>
    </property>
   </action>
   <action name="action_S">
    <property name="text">
     <string>保存(&amp;S)</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
   </action>
   <action name="action_A">
    <property name="text">
     <string>另存为(&amp;A)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
    </property>
   </action>
   <action name="action_U">
    <property name="text">
     <string>页面设置(&amp;U)</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+U</string>
+   </property>
   </action>
   <action name="action_P">
    <property name="text">
     <string>打印(&amp;P)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
    </property>
   </action>
   <action name="action_X">
@@ -219,6 +243,9 @@
    <property name="text">
     <string>重命名(&amp;R)</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+R</string>
+   </property>
   </action>
   <action name="action_U_2">
    <property name="enabled">
@@ -226,6 +253,9 @@
    </property>
    <property name="text">
     <string>撤销(&amp;U)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
    </property>
   </action>
   <action name="action_T">
@@ -235,6 +265,9 @@
    <property name="text">
     <string>剪切(&amp;T)</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
   </action>
   <action name="action_C_2">
    <property name="enabled">
@@ -242,6 +275,9 @@
    </property>
    <property name="text">
     <string>复制(&amp;C)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
    </property>
   </action>
   <action name="action_P_2">
@@ -251,6 +287,9 @@
    <property name="text">
     <string>粘贴(&amp;P)</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
   </action>
   <action name="action_L">
    <property name="enabled">
@@ -258,6 +297,9 @@
    </property>
    <property name="text">
     <string>删除(&amp;L)</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
    </property>
   </action>
   <action name="action_F_2">
@@ -267,6 +309,9 @@
    <property name="text">
     <string>查找(&amp;F)</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
   </action>
   <action name="action_N_2">
    <property name="enabled">
@@ -274,6 +319,9 @@
    </property>
    <property name="text">
     <string>查找下一个(&amp;N)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F3</string>
    </property>
   </action>
   <action name="action_V">
@@ -283,10 +331,8 @@
    <property name="text">
     <string>查找上一个(&amp;V)</string>
    </property>
-  </action>
-  <action name="action_Bing">
-   <property name="text">
-    <string>使用 Bing 搜索...</string>
+   <property name="shortcut">
+    <string>Alt+F3</string>
    </property>
   </action>
   <action name="action_R_2">
@@ -296,6 +342,9 @@
    <property name="text">
     <string>替换(&amp;R)</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
+   </property>
   </action>
   <action name="action_G_2">
    <property name="enabled">
@@ -303,6 +352,9 @@
    </property>
    <property name="text">
     <string>转到(&amp;G)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
    </property>
   </action>
   <action name="action_Bing_2">
@@ -312,15 +364,24 @@
    <property name="text">
     <string>使用 Bing 搜索...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+F1</string>
+   </property>
   </action>
   <action name="action_D">
    <property name="text">
     <string>时间/日期(&amp;D)</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+F2</string>
+   </property>
   </action>
   <action name="action_A_2">
    <property name="text">
     <string>全选(&amp;A)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
    </property>
   </action>
   <action name="action_W_2">
@@ -338,6 +399,9 @@
    <property name="text">
     <string>字体(&amp;F)</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+F4</string>
+   </property>
   </action>
   <action name="action_Z">
    <property name="text">
@@ -353,6 +417,9 @@
    </property>
    <property name="text">
     <string>状态栏(&amp;S)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
    </property>
   </action>
   <action name="action_H">
@@ -400,15 +467,24 @@
    <property name="text">
     <string>放大(&amp;I)</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+=</string>
+   </property>
   </action>
   <action name="action_O_2">
    <property name="text">
     <string>缩小(&amp;O)</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+-</string>
+   </property>
   </action>
   <action name="action_R_4">
    <property name="text">
     <string>恢复默认(&amp;R)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+0</string>
    </property>
   </action>
  </widget>

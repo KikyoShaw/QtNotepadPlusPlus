@@ -43,9 +43,9 @@ void FindDialog::openFind(bool replace)
     this->adjustSize();
 
     if (!replace)
-        setWindowTitle(QStringLiteral("查找"));
+        setWindowTitle("查找");
     else
-        setWindowTitle(QStringLiteral("替换"));
+        setWindowTitle("替换");
 }
 
 const QString FindDialog::getFindText() const
