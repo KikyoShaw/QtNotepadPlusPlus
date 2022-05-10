@@ -129,6 +129,11 @@
     <property name="title">
      <string>工具(&amp;T)</string>
     </property>
+    <addaction name="action_R_3"/>
+    <addaction name="action_Unicode_S"/>
+    <addaction name="separator"/>
+    <addaction name="action_L_2"/>
+    <addaction name="action_H_2"/>
    </widget>
    <addaction name="menu_F"/>
    <addaction name="menu_E"/>
@@ -347,6 +352,29 @@
   <action name="action_A_3">
    <property name="text">
     <string>关于记事本(&amp;A)</string>
+   </property>
+  </action>
+  <action name="action_L_2">
+   <property name="text">
+    <string>关闭输入法(&amp;L)</string>
+   </property>
+  </action>
+  <action name="action_R_3">
+   <property name="text">
+    <string>从右到左的阅读顺序(&amp;R)</string>
+   </property>
+  </action>
+  <action name="action_Unicode_S">
+   <property name="text">
+    <string>显示Unicode控制字符(&amp;S)</string>
+   </property>
+  </action>
+  <action name="action_H_2">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>汉字重选(&amp;H)</string>
    </property>
   </action>
  </widget>

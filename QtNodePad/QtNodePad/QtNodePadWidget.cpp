@@ -56,6 +56,7 @@ QtNodePad::QtNodePad(QWidget *parent)
 	connect(ui.mainTextEdit, &QPlainTextEdit::textChanged, this, &QtNodePad::sltPlainTextEditTextChanged);
 	connect(ui.mainTextEdit, &QPlainTextEdit::undoAvailable, this, &QtNodePad::sltPlainTextEditUndoAvailable);
 	connect(ui.mainTextEdit, &QPlainTextEdit::cursorPositionChanged, this, &QtNodePad::sltPlainTextEditCursorPositionChanged);
+	connect(ui.mainTextEdit, &QPlainTextEdit::customContextMenuRequested, this, &QtNodePad::sltPlainTextEditCustomContextMenuRequested);
 
 	connect(ui.action_N, &QAction::triggered, this, &QtNodePad::sltActionNewCreate);
 	connect(ui.action_W, &QAction::triggered, this, &QtNodePad::sltActionCreateWindow);
@@ -211,7 +212,7 @@ void QtNodePad::sltPlainTextEdiSelectionChanged()
 	ui.action_C_2->setEnabled(selected);
 	ui.action_T->setEnabled(selected);
 	ui.action_L->setEnabled(selected);
-	/*ui->actionReselect_Chinese->setEnabled(selected);*/
+	ui.action_H_2->setEnabled(selected);
 }
 
 void QtNodePad::sltPlainTextEditUndoAvailable(bool ava)
@@ -230,6 +231,64 @@ void QtNodePad::sltPlainTextEditCursorPositionChanged()
 	int col = tc.columnNumber(); // 第几列
 	// int row = tc.blockNumber(); // 第几段，无法识别WordWrap的第几行
 	m_posLabel->setText("第 " + QString::number(line + 1) + " 行，第 " + QString::number(col + 1) + " 列");
+}
+
+void QtNodePad::sltPlainTextEditCustomContextMenuRequested(const QPoint & p)
+{
+	QMenu* menu = new QMenu();
+
+	QMenu* insertUnicodeControlCharsMenu = new QMenu("插入 Unicode 控制字符(&I)", menu);
+	QList<QPair<QString, QString>> unicodeControlChars{
+		{"LRM", "&Left-to-right mark"},
+		{"RLM", "&Right-to-left mark"},
+		{"ZWJ", "Zero width joiner"},
+		{"ZWNJ", "Zero width &non-joiner"},
+		{"LRE", "Start of left-to-right &embedding"},
+		{"RLE", "Start of right-to-left e&mbedding"},
+		{"LRO", "Start of left-to-right &override"},
+		{"RLO", "Start of right-to-left o&verride"},
+		{"PDF", "&Pop directional formatting"},
+		{"NADS", "N&ational digit shapes substitution"},
+		{"NODS", "Nominal (European) &digit shapes"},
+		{"ASS", "Activate &symmetric swapping"},
+		{"ISS", "Inhibit s&ymmetric swapping"},
+		{"AAFS", "Activate Arabic &form shaping"},
+		{"IAFS", "Inhibit Arabic form s&haping"},
+		{"RS", "Record Separator (&Block separator)"},
+		{"US", "Unit Separator (&Segment separator)"}
+	};
+	for (auto p : unicodeControlChars)
+	{
+		QAction* action = new QAction(p.first, insertUnicodeControlCharsMenu);
+		action->setToolTip(p.second);
+		// TODO: 把提示也显示出来
+		connect(action, &QAction::triggered, ui.mainTextEdit, [=] {
+			// TODO: 插入 Unicode 控制字符
+			// ui->plainTextEdit->insertPlainText("\u202c");
+			});
+		insertUnicodeControlCharsMenu->addAction(action);
+	}
+
+	menu->addAction(ui.action_U_2);
+	menu->addSeparator();
+	menu->addAction(ui.action_C_2);
+	menu->addAction(ui.action_P_2);
+	menu->addAction(ui.action_T);
+	menu->addAction(ui.action_L);
+	menu->addSeparator();
+	menu->addAction(ui.action_A_2);
+	menu->addSeparator();
+	menu->addAction(ui.action_R_3);
+	menu->addAction(ui.action_Unicode_S);
+	menu->addMenu(insertUnicodeControlCharsMenu);
+	menu->addSeparator();
+	menu->addAction(ui.action_L_2);
+	menu->addAction(ui.action_H_2);
+	menu->addSeparator();
+	menu->addAction(ui.action_Bing_2);
+
+	menu->exec(QCursor::pos());
+	menu->deleteLater();
 }
 
 void QtNodePad::sltActionNewCreate()

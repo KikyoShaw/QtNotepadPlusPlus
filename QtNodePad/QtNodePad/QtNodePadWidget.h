@@ -37,6 +37,7 @@ private slots:
 	void sltPlainTextEdiSelectionChanged();
 	void sltPlainTextEditUndoAvailable(bool ava);
 	void sltPlainTextEditCursorPositionChanged();
+	void sltPlainTextEditCustomContextMenuRequested(const QPoint &p);
 
 	//ÐÂ½¨
 	void sltActionNewCreate();
