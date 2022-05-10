@@ -6,6 +6,7 @@
 #include <QProcess>
 #include <QDesktopServices>
 #include <QTextBlock>
+#include <QDateTime>
 #include "FindDialog.h"
 
 QtNodePad::QtNodePad(QWidget *parent)
@@ -77,6 +78,8 @@ QtNodePad::QtNodePad(QWidget *parent)
 	connect(ui.action_V, &QAction::triggered, this, &QtNodePad::sltActionFindPrev);
 	connect(ui.action_R_2, &QAction::triggered, this, &QtNodePad::sltActionReplace);
 	connect(ui.action_A_2, &QAction::triggered, this, &QtNodePad::sltActionSelectAll);
+	connect(ui.action_D, &QAction::triggered, this, &QtNodePad::sltActionAddDate);
+	connect(ui.action_W_2, &QAction::triggered, this, &QtNodePad::sltActionWrap);
 
 	connect(ui.action_I, &QAction::triggered, this, &QtNodePad::sltActionZoomIn);
 	connect(ui.action_O_2, &QAction::triggered, this, &QtNodePad::sltActionZoomOut);
@@ -456,6 +459,27 @@ void QtNodePad::sltActionReplace()
 void QtNodePad::sltActionSelectAll()
 {
 	ui.mainTextEdit->selectAll();
+}
+
+void QtNodePad::sltActionAddDate()
+{
+	ui.mainTextEdit->insertPlainText(QDateTime::currentDateTime().toString("hh:mm yyyy/MM/dd"));
+}
+
+void QtNodePad::sltActionWrap()
+{
+	if (ui.mainTextEdit->wordWrapMode() == QTextOption::NoWrap)
+	{
+		ui.mainTextEdit->setWordWrapMode(QTextOption::WordWrap);
+		ui.action_W_2->setChecked(true);
+		m_settings.setValue("wordWrap", true);
+	}
+	else
+	{
+		ui.mainTextEdit->setWordWrapMode(QTextOption::NoWrap);
+		ui.action_W_2->setChecked(false);
+		m_settings.setValue("wordWrap", false);
+	}
 }
 
 void QtNodePad::sltActionZoomIn()

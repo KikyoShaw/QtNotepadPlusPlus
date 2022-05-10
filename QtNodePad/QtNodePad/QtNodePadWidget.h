@@ -76,6 +76,10 @@ private slots:
 	void sltActionReplace();
 	//全选
 	void sltActionSelectAll();
+	//日期添加
+	void sltActionAddDate();
+	//换行
+	void sltActionWrap();
 
 	//放大
 	void sltActionZoomIn();
