@@ -72,6 +72,11 @@ private slots:
 	//上一个
 	void sltActionFindPrev();
 
+	//输入法操作
+	void sltInputHandle();
+	//阅读顺序
+	void sltReadHandle();
+
 protected:
 	virtual void showEvent(QShowEvent* e) override;
 	virtual void closeEvent(QCloseEvent* e) override;

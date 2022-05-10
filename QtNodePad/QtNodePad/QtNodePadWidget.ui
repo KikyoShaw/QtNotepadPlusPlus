@@ -320,6 +320,12 @@
    </property>
   </action>
   <action name="action_W_2">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>自动换行(&amp;W)</string>
    </property>
@@ -360,6 +366,9 @@
    </property>
   </action>
   <action name="action_R_3">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>从右到左的阅读顺序(&amp;R)</string>
    </property>

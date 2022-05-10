@@ -75,6 +75,9 @@ QtNodePad::QtNodePad(QWidget *parent)
 	connect(ui.action_F_2, &QAction::triggered, this, &QtNodePad::sltActionFind);
 	connect(ui.action_N_2, &QAction::triggered, this, &QtNodePad::sltActionFindNext);
 	connect(ui.action_V, &QAction::triggered, this, &QtNodePad::sltActionFindPrev);
+
+	connect(ui.action_L_2, &QAction::triggered, this, &QtNodePad::sltInputHandle);
+	connect(ui.action_R_3, &QAction::triggered, this, &QtNodePad::sltReadHandle);
 }
 
 QtNodePad::~QtNodePad()
@@ -426,6 +429,26 @@ void QtNodePad::sltActionFindPrev()
 		ui.mainTextEdit->setTextCursor(tc);
 		sltActionFindPrev();
 	}
+}
+
+void QtNodePad::sltInputHandle()
+{
+	if (ui.mainTextEdit->isReadOnly())
+	{
+		ui.mainTextEdit->setReadOnly(false);
+		ui.action_L_2->setText("关闭输入法(&L)");
+	}
+	else
+	{
+		ui.mainTextEdit->setReadOnly(true);
+		ui.action_L_2->setText("打开输入法(&O)");
+	}
+}
+
+void QtNodePad::sltReadHandle()
+{
+	auto direction = ui.action_R_3->isChecked() ? Qt::RightToLeft : Qt::LeftToRight;
+	ui.mainTextEdit->setLayoutDirection(direction);
 }
 
 void QtNodePad::showEvent(QShowEvent * e)
