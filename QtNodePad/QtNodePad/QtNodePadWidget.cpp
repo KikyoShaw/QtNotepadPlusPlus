@@ -19,13 +19,13 @@ QtNodePad::QtNodePad(QWidget *parent)
 	// 读取设置
 	if (!m_settings.value("wordWrap", true).toBool())
 	{
-		//ui->actionWord_Wrap_W->setChecked(false);
+		ui.action_W_2->setChecked(false);
 		ui.mainTextEdit->setWordWrapMode(QTextOption::NoWrap);
 	}
 	if (!m_settings.value("statusBar", true).toBool())
 	{
 		this->statusBar()->hide();
-		//ui->actionStatus_Bar_S->setChecked(false);
+		ui.action_S_2->setChecked(false);
 	}
 
 	// 恢复字体
@@ -89,9 +89,11 @@ QtNodePad::QtNodePad(QWidget *parent)
 
 	connect(ui.action_L_2, &QAction::triggered, this, &QtNodePad::sltActionInputHandle);
 	connect(ui.action_R_3, &QAction::triggered, this, &QtNodePad::sltActionReadHandle);
+	connect(ui.action_S_2, &QAction::triggered, this, &QtNodePad::sltActionStatus);
 
 	connect(ui.action_H, &QAction::triggered, this, &QtNodePad::sltActionHelp);
 	connect(ui.action_F_4, &QAction::triggered, this, &QtNodePad::sltActionGithub);
+	connect(ui.action_A_3, &QAction::triggered, this, &QtNodePad::sltActionAboutNotePad);
 }
 
 QtNodePad::~QtNodePad()
@@ -553,6 +555,22 @@ void QtNodePad::sltActionReadHandle()
 	ui.mainTextEdit->setLayoutDirection(direction);
 }
 
+void QtNodePad::sltActionStatus()
+{
+	if (this->statusBar()->isHidden())
+	{
+		this->statusBar()->show();
+		ui.action_S_2->setChecked(true);
+		m_settings.setValue("statusBar", true);
+	}
+	else
+	{
+		this->statusBar()->hide();
+		ui.action_S_2->setChecked(false);
+		m_settings.setValue("statusBar", false);
+	}
+}
+
 void QtNodePad::sltActionHelp()
 {
 	QDesktopServices::openUrl(QUrl("https://github.com/KikyoShaw/QtNotepadPlusPlus"));
@@ -561,6 +579,11 @@ void QtNodePad::sltActionHelp()
 void QtNodePad::sltActionGithub()
 {
 	QDesktopServices::openUrl(QUrl("https://github.com/KikyoShaw"));
+}
+
+void QtNodePad::sltActionAboutNotePad()
+{
+	QMessageBox::about(this, "关于", "高仿NotePad++的Qt版");
 }
 
 void QtNodePad::showEvent(QShowEvent * e)

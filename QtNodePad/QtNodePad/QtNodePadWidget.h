@@ -94,11 +94,15 @@ private slots:
 	void sltActionInputHandle();
 	//阅读顺序
 	void sltActionReadHandle();
+	//底部工具栏
+	void sltActionStatus();
 
 	//帮助
 	void sltActionHelp();
 	//主页
 	void sltActionGithub();
+	//关于
+	void sltActionAboutNotePad();
 
 protected:
 	virtual void showEvent(QShowEvent* e) override;
