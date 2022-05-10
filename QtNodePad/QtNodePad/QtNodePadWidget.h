@@ -29,7 +29,12 @@ private:
 	void createFindDialog();
 
 private slots:
+	//文件保存
 	bool sltActionSaveFile();
+
+	//文本内容操作
+	void sltPlainTextEdiSelectionChanged();
+
 
 	//新建
 	void sltActionNewCreate();

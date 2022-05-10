@@ -51,6 +51,8 @@ QtNodePad::QtNodePad(QWidget *parent)
 	qApp->setWindowIcon(icon);
 
 	//操作
+	connect(ui.mainTextEdit, &QPlainTextEdit::selectionChanged, this, &QtNodePad::sltPlainTextEdiSelectionChanged);
+
 	connect(ui.action_N, &QAction::triggered, this, &QtNodePad::sltActionNewCreate);
 	connect(ui.action_W, &QAction::triggered, this, &QtNodePad::sltActionCreateWindow);
 	connect(ui.action_O, &QAction::triggered, this, &QtNodePad::sltActionOpenFile);
@@ -183,6 +185,16 @@ void QtNodePad::createFindDialog()
 		// ui.mainTextEdit->setTextCursor(tc);     // 不调用这句话，保留替换之前的位置
 		// ui.mainTextEdit->setPlainText(content); // 这个会导致无法撤销，而且会重置光标位置到开头
 	});
+}
+
+void QtNodePad::sltPlainTextEdiSelectionChanged()
+{
+	bool selected = ui.mainTextEdit->textCursor().hasSelection();
+	ui.action_Bing_2->setEnabled(selected);
+	ui.action_C_2->setEnabled(selected);
+	ui.action_T->setEnabled(selected);
+	ui.action_L->setEnabled(selected);
+	/*ui->actionReselect_Chinese->setEnabled(selected);*/
 }
 
 void QtNodePad::sltActionNewCreate()

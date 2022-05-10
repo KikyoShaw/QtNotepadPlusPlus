@@ -212,41 +212,65 @@
    </property>
   </action>
   <action name="action_U_2">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>撤销(&amp;U)</string>
    </property>
   </action>
   <action name="action_T">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>剪切(&amp;T)</string>
    </property>
   </action>
   <action name="action_C_2">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>复制(&amp;C)</string>
    </property>
   </action>
   <action name="action_P_2">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>粘贴(&amp;P)</string>
    </property>
   </action>
   <action name="action_L">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>删除(&amp;L)</string>
    </property>
   </action>
   <action name="action_F_2">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>查找(&amp;F)</string>
    </property>
   </action>
   <action name="action_N_2">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>查找下一个(&amp;N)</string>
    </property>
   </action>
   <action name="action_V">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>查找上一个(&amp;V)</string>
    </property>
@@ -257,16 +281,25 @@
    </property>
   </action>
   <action name="action_R_2">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>替换(&amp;R)</string>
    </property>
   </action>
   <action name="action_G_2">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>转到(&amp;G)</string>
    </property>
   </action>
   <action name="action_Bing_2">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>使用 Bing 搜索...</string>
    </property>
