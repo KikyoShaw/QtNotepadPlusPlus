@@ -47,5 +47,5 @@ protected:
 
 private:
     Ui::FindDialog ui;
-    QSettings& settings;
+    QSettings& m_settings;
 };

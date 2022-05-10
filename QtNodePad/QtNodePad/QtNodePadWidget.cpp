@@ -75,6 +75,11 @@ QtNodePad::QtNodePad(QWidget *parent)
 	connect(ui.action_F_2, &QAction::triggered, this, &QtNodePad::sltActionFind);
 	connect(ui.action_N_2, &QAction::triggered, this, &QtNodePad::sltActionFindNext);
 	connect(ui.action_V, &QAction::triggered, this, &QtNodePad::sltActionFindPrev);
+	connect(ui.action_R_2, &QAction::triggered, this, &QtNodePad::sltActionReplace);
+
+	connect(ui.action_I, &QAction::triggered, this, &QtNodePad::sltActionZoomIn);
+	connect(ui.action_O_2, &QAction::triggered, this, &QtNodePad::sltActionZoomOut);
+	connect(ui.action_R_4, &QAction::triggered, this, &QtNodePad::sltActionZoomDefault);
 
 	connect(ui.action_L_2, &QAction::triggered, this, &QtNodePad::sltActionInputHandle);
 	connect(ui.action_R_3, &QAction::triggered, this, &QtNodePad::sltActionReadHandle);
@@ -432,6 +437,53 @@ void QtNodePad::sltActionFindPrev()
 		ui.mainTextEdit->setTextCursor(tc);
 		sltActionFindPrev();
 	}
+}
+
+void QtNodePad::sltActionReplace()
+{
+	if (!m_findDialog)
+	{
+		createFindDialog();
+	}
+	m_findDialog->openFind(true);
+}
+
+void QtNodePad::sltActionZoomIn()
+{
+	if (zoomSize >= 500)
+		return;
+
+	ui.mainTextEdit->zoomIn(1);
+	zoomSize += 10;
+	m_zoomLabel->setText(QString::number(zoomSize) + "%");
+}
+
+void QtNodePad::sltActionZoomOut()
+{
+	if (zoomSize <= 10)
+		return;
+
+	ui.mainTextEdit->zoomOut(1);
+	zoomSize -= 10;
+	m_zoomLabel->setText(QString::number(zoomSize) + "%");
+}
+
+void QtNodePad::sltActionZoomDefault()
+{
+	QString fs;
+	if (!(fs = m_settings.value("font").toString()).isEmpty())
+	{
+		QFont f;
+		f.fromString(fs);
+		ui.mainTextEdit->setFont(f);
+	}
+	else
+	{
+		ui.mainTextEdit->setFont(qApp->font());
+	}
+
+	zoomSize = 100;
+	m_zoomLabel->setText(QString::number(zoomSize) + "%");
 }
 
 void QtNodePad::sltActionInputHandle()

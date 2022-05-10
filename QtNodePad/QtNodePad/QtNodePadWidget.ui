@@ -122,7 +122,15 @@
     <property name="title">
      <string>查看(&amp;V)</string>
     </property>
-    <addaction name="action_Z"/>
+    <widget class="QMenu" name="menu_Z">
+     <property name="title">
+      <string>缩放(&amp;Z)</string>
+     </property>
+     <addaction name="action_I"/>
+     <addaction name="action_O_2"/>
+     <addaction name="action_R_4"/>
+    </widget>
+    <addaction name="menu_Z"/>
     <addaction name="action_S_2"/>
    </widget>
    <widget class="QMenu" name="menu_T">
@@ -138,8 +146,8 @@
    <addaction name="menu_F"/>
    <addaction name="menu_E"/>
    <addaction name="menu_O"/>
-   <addaction name="menu_T"/>
    <addaction name="menu_V"/>
+   <addaction name="menu_T"/>
    <addaction name="menu_H"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
@@ -384,6 +392,21 @@
    </property>
    <property name="text">
     <string>汉字重选(&amp;H)</string>
+   </property>
+  </action>
+  <action name="action_I">
+   <property name="text">
+    <string>放大(&amp;I)</string>
+   </property>
+  </action>
+  <action name="action_O_2">
+   <property name="text">
+    <string>缩小(&amp;O)</string>
+   </property>
+  </action>
+  <action name="action_R_4">
+   <property name="text">
+    <string>恢复默认(&amp;R)</string>
    </property>
   </action>
  </widget>

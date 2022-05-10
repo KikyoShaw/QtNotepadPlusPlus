@@ -72,6 +72,16 @@ private slots:
 	//上一个
 	void sltActionFindPrev();
 
+	//替换
+	void sltActionReplace();
+
+	//放大
+	void sltActionZoomIn();
+	//缩小
+	void sltActionZoomOut();
+	//恢复默认
+	void sltActionZoomDefault();
+
 	//输入法操作
 	void sltActionInputHandle();
 	//阅读顺序

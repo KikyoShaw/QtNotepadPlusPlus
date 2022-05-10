@@ -2,17 +2,17 @@
 
 FindDialog::FindDialog(QSettings &settings, QWidget *parent) :
     QDialog(parent),
-    settings(settings)
+	m_settings(settings)
 {
     ui.setupUi(this);
     this->setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 
     // 读取数据
-    ui.findEdit->setText(settings.value("find/findText").toString());
-    ui.replaceEdit->setText(settings.value("find/replaceText").toString());
-    ui.caseSensitiveCheck->setChecked(settings.value("find/caseSensitive").toBool());
-    ui.loopCheck->setChecked(settings.value("find/loop").toBool());
-    if (!settings.value("find/down", true).toBool())
+    ui.findEdit->setText(m_settings.value("find/findText").toString());
+    ui.replaceEdit->setText(m_settings.value("find/replaceText").toString());
+    ui.caseSensitiveCheck->setChecked(m_settings.value("find/caseSensitive").toBool());
+    ui.loopCheck->setChecked(m_settings.value("find/loop").toBool());
+    if (!m_settings.value("find/down", true).toBool())
         ui.upRadio->setChecked(true);
 
 	connect(ui.findNextButton, &QPushButton::clicked, this, &FindDialog::sltFindNext);
@@ -74,39 +74,39 @@ void FindDialog::sltFindNext()
         emit signalFindPrev();
     else
         emit signalFindNext();
-    settings.setValue("find/findText", ui.findEdit->text());
+	m_settings.setValue("find/findText", ui.findEdit->text());
 }
 
 void FindDialog::sltReplace()
 {
     emit signalReplaceNext();
-    settings.setValue("find/replaceText", ui.replaceEdit->text());
+	m_settings.setValue("find/replaceText", ui.replaceEdit->text());
 }
 
 void FindDialog::sltReplaceAll()
 {
     emit signalReplaceAll();
-    settings.setValue("find/replaceText", ui.replaceEdit->text());
+	m_settings.setValue("find/replaceText", ui.replaceEdit->text());
 }
 
 void FindDialog::sltCaseSensitiveCheck()
 {
-    settings.setValue("find/caseSensitive", ui.caseSensitiveCheck->isChecked());
+	m_settings.setValue("find/caseSensitive", ui.caseSensitiveCheck->isChecked());
 }
 
 void FindDialog::sltLoopCheck()
 {
-    settings.setValue("find/loop", ui.loopCheck->isChecked());
+	m_settings.setValue("find/loop", ui.loopCheck->isChecked());
 }
 
 void FindDialog::sltUp()
 {
-    settings.setValue("find/down", false);
+	m_settings.setValue("find/down", false);
 }
 
 void FindDialog::sltDown()
 {
-    settings.setValue("find/down", true);
+	m_settings.setValue("find/down", true);
 }
 
 void FindDialog::showEvent(QShowEvent *event)
