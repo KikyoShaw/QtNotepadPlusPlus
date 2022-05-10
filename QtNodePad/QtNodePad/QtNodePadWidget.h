@@ -7,6 +7,8 @@
 #include <QSettings>
 #include "ui_QtNodePadWidget.h"
 
+class FindDialog;
+
 class QtNodePad : public QMainWindow
 {
     Q_OBJECT
@@ -24,6 +26,7 @@ public:
 private:
 	void updateWindowTitle();
 	bool askSaveFile();
+	void createFindDialog();
 
 private slots:
 	bool sltActionSaveFile();
@@ -52,6 +55,15 @@ private slots:
 	//删除
 	void sltActionDelete();
 
+	//必应搜索
+	void sltActionBingSearch();
+	//搜索
+	void sltActionFind();
+	//下一个
+	void sltActionFindNext();
+	//上一个
+	void sltActionFindPrev();
+
 protected:
 	virtual void showEvent(QShowEvent* e) override;
 	virtual void closeEvent(QCloseEvent* e) override;
@@ -71,4 +83,7 @@ private:
 	QLabel* m_zoomLabel = nullptr;
 	QLabel* m_lineLabel = nullptr;
 	QLabel* m_codecLabel = nullptr;
+
+	//搜索控件
+	FindDialog* m_findDialog = nullptr;
 };

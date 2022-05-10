@@ -4,6 +4,8 @@
 #include <QFileDialog>
 #include <QTextStream>
 #include <QProcess>
+#include <QDesktopServices>
+#include "FindDialog.h"
 
 QtNodePad::QtNodePad(QWidget *parent)
     : QMainWindow(parent)
@@ -61,6 +63,11 @@ QtNodePad::QtNodePad(QWidget *parent)
 	connect(ui.action_P_2, &QAction::triggered, this, &QtNodePad::sltActionPaste);
 	connect(ui.action_T, &QAction::triggered, this, &QtNodePad::sltActionCut);
 	connect(ui.action_L, &QAction::triggered, this, &QtNodePad::sltActionDelete);
+
+	connect(ui.action_Bing_2, &QAction::triggered, this, &QtNodePad::sltActionBingSearch);
+	connect(ui.action_F_2, &QAction::triggered, this, &QtNodePad::sltActionFind);
+	connect(ui.action_N_2, &QAction::triggered, this, &QtNodePad::sltActionFindNext);
+	connect(ui.action_V, &QAction::triggered, this, &QtNodePad::sltActionFindPrev);
 }
 
 QtNodePad::~QtNodePad()
@@ -119,6 +126,63 @@ bool QtNodePad::askSaveFile()
 		return sltActionSaveFile();
 	}
 	return true;
+}
+
+void QtNodePad::createFindDialog()
+{
+	m_findDialog = new FindDialog(m_settings, this);
+
+	connect(m_findDialog, &FindDialog::signalShow, this, [=] {
+		ui.action_N_2->setEnabled(true);
+		ui.action_V->setEnabled(true);
+	});
+	connect(m_findDialog, &FindDialog::signalHide, this, [=] {
+		ui.action_N_2->setEnabled(false);
+		ui.action_V->setEnabled(false);
+	});
+	/* connect(m_findDialog, &FindDialog::signalTextChanged, this, [=](const QString& text){
+		this->findText = text;
+	}); */
+	connect(m_findDialog, &FindDialog::signalFindNext, this, &QtNodePad::sltActionFindNext);
+	connect(m_findDialog, &FindDialog::signalFindPrev, this, &QtNodePad::sltActionFindPrev);
+	connect(m_findDialog, &FindDialog::signalReplaceNext, this, [=] {
+		const QString& findText = m_findDialog->getFindText();
+		const QString& replaceText = m_findDialog->getReplaceText();
+		if (findText.isEmpty())
+			return;
+
+		// 替换 逻辑上分为：查找、选中、替换
+		const QString& selectedText = ui.mainTextEdit->textCursor().selectedText();
+		if ((m_findDialog->isCaseSensitive() && selectedText != findText)
+			|| selectedText.toLower() != findText.toLower())
+		{
+			// 如果选中的词不是findText，则查找下一个
+			sltActionFindNext();
+		}
+		else
+		{
+			// 已选中，则替换选中的
+			QTextCursor tc = ui.mainTextEdit->textCursor();
+			tc.insertText(replaceText);
+			ui.mainTextEdit->setTextCursor(tc);
+			sltActionFindNext(); // 查找下一个
+		}
+		});
+	connect(m_findDialog, &FindDialog::signalReplaceAll, this, [=] {
+		const QString& findText = m_findDialog->getFindText();
+		const QString& replaceText = m_findDialog->getReplaceText();
+		if (findText.isEmpty())
+			return;
+
+		QString content = ui.mainTextEdit->toPlainText();
+		QTextCursor tc = ui.mainTextEdit->textCursor();
+		tc.setPosition(0);
+		tc.setPosition(content.length(), QTextCursor::KeepAnchor);
+		content.replace(findText, replaceText);
+		tc.insertText(content);
+		// ui.mainTextEdit->setTextCursor(tc);     // 不调用这句话，保留替换之前的位置
+		// ui.mainTextEdit->setPlainText(content); // 这个会导致无法撤销，而且会重置光标位置到开头
+	});
 }
 
 void QtNodePad::sltActionNewCreate()
@@ -200,6 +264,62 @@ void QtNodePad::sltActionDelete()
 		return;
 	tc.setPosition(pos + 1, QTextCursor::MoveMode::KeepAnchor);
 	tc.removeSelectedText();
+}
+
+void QtNodePad::sltActionBingSearch()
+{
+	// !这里是转到UTF-8，保存到txt是保存为GBK
+	QByteArray key = ui.mainTextEdit->textCursor().selectedText().toUtf8().toPercentEncoding();
+	QDesktopServices::openUrl(QUrl("https://cn.bing.com/search?q=" + key + "&form=NPCTXT"));
+}
+
+void QtNodePad::sltActionFind()
+{
+	if (!m_findDialog)
+	{
+		createFindDialog();
+	}
+	m_findDialog->openFind(false);
+}
+
+void QtNodePad::sltActionFindNext()
+{
+	const QString& text = m_findDialog->getFindText();
+	if (text.isEmpty())
+		return;
+
+	QTextDocument::FindFlags flags;
+	if (m_findDialog->isCaseSensitive())
+		flags |= QTextDocument::FindCaseSensitively;
+	bool rst = ui.mainTextEdit->find(text, flags);
+	if (!rst && m_findDialog->isLoop()
+		&& ui.mainTextEdit->toPlainText().contains(text)) // 没找到，尝试从头开始
+	{
+		QTextCursor tc = ui.mainTextEdit->textCursor();
+		tc.setPosition(0);
+		ui.mainTextEdit->setTextCursor(tc);
+		sltActionFindNext();
+	}
+}
+
+void QtNodePad::sltActionFindPrev()
+{
+	const QString& text = m_findDialog->getFindText();
+	if (text.isEmpty())
+		return;
+
+	QTextDocument::FindFlags flags = QTextDocument::FindBackward;
+	if (m_findDialog->isCaseSensitive())
+		flags |= QTextDocument::FindCaseSensitively;
+	bool rst = ui.mainTextEdit->find(text, flags);
+	if (!rst && m_findDialog->isLoop()
+		&& ui.mainTextEdit->toPlainText().contains(text))
+	{
+		QTextCursor tc = ui.mainTextEdit->textCursor();
+		tc.setPosition(ui.mainTextEdit->toPlainText().length());
+		ui.mainTextEdit->setTextCursor(tc);
+		sltActionFindPrev();
+	}
 }
 
 void QtNodePad::showEvent(QShowEvent * e)
