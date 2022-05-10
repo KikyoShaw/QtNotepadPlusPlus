@@ -53,6 +53,8 @@ private slots:
 	void sltActionExit();
 	//重命名
 	void sltActionRename();
+	//打开所在文件夹
+	void sltActionOpenFolder();
 
 	//撤销
 	void sltActionUndo();

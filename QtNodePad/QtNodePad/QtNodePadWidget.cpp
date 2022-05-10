@@ -89,6 +89,7 @@ QtNodePad::QtNodePad(QWidget *parent)
 	connect(ui.action_D, &QAction::triggered, this, &QtNodePad::sltActionAddDate);
 	connect(ui.action_W_2, &QAction::triggered, this, &QtNodePad::sltActionWrap);
 	connect(ui.action_F_3, &QAction::triggered, this, &QtNodePad::sltActionFontHandle);
+	connect(ui.action_F, &QAction::triggered, this, &QtNodePad::sltActionOpenFolder);
 
 	connect(ui.action_I, &QAction::triggered, this, &QtNodePad::sltActionZoomIn);
 	connect(ui.action_O_2, &QAction::triggered, this, &QtNodePad::sltActionZoomOut);
@@ -382,6 +383,23 @@ void QtNodePad::sltActionRename()
 		});
 	}
 	m_renameDialog->showRenameDialog(fileName);
+}
+
+void QtNodePad::sltActionOpenFolder()
+{
+	QFileInfo fileInfo(filePath);
+	if (!fileInfo.isFile()) {
+		QMessageBox::warning(this, "记事本", "请先保存文件！");
+		return;
+	}
+
+	QString pathStr = filePath.left(filePath.lastIndexOf("/"));
+	pathStr.replace("/", "//");
+	bool ok = QDesktopServices::openUrl(QUrl(pathStr));
+	if (!ok)
+	{
+		QMessageBox::warning(this, "记事本", "打开文件所在文件夹失败！");
+	}
 }
 
 void QtNodePad::sltActionUndo()
