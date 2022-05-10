@@ -80,6 +80,8 @@ private slots:
 	void sltActionAddDate();
 	//换行
 	void sltActionWrap();
+	//字体
+	void sltActionFontHandle();
 
 	//放大
 	void sltActionZoomIn();

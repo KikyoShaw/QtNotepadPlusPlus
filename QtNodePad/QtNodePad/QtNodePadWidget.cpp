@@ -7,6 +7,7 @@
 #include <QDesktopServices>
 #include <QTextBlock>
 #include <QDateTime>
+#include <QFontDialog>
 #include "FindDialog.h"
 
 QtNodePad::QtNodePad(QWidget *parent)
@@ -80,6 +81,7 @@ QtNodePad::QtNodePad(QWidget *parent)
 	connect(ui.action_A_2, &QAction::triggered, this, &QtNodePad::sltActionSelectAll);
 	connect(ui.action_D, &QAction::triggered, this, &QtNodePad::sltActionAddDate);
 	connect(ui.action_W_2, &QAction::triggered, this, &QtNodePad::sltActionWrap);
+	connect(ui.action_F_3, &QAction::triggered, this, &QtNodePad::sltActionFontHandle);
 
 	connect(ui.action_I, &QAction::triggered, this, &QtNodePad::sltActionZoomIn);
 	connect(ui.action_O_2, &QAction::triggered, this, &QtNodePad::sltActionZoomOut);
@@ -480,6 +482,17 @@ void QtNodePad::sltActionWrap()
 		ui.action_W_2->setChecked(false);
 		m_settings.setValue("wordWrap", false);
 	}
+}
+
+void QtNodePad::sltActionFontHandle()
+{
+	bool ok;
+	QFont f = QFontDialog::getFont(&ok, ui.mainTextEdit->font(), this, "×ÖÌå");
+	if (!ok)
+		return;
+
+	ui.mainTextEdit->setFont(f);
+	m_settings.setValue("font", f.toString());
 }
 
 void QtNodePad::sltActionZoomIn()
