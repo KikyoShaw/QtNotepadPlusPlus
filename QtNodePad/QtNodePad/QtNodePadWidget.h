@@ -33,7 +33,9 @@ private slots:
 	bool sltActionSaveFile();
 
 	//文本内容操作
+	void sltPlainTextEditTextChanged();
 	void sltPlainTextEdiSelectionChanged();
+	void sltPlainTextEditUndoAvailable(bool ava);
 
 
 	//新建

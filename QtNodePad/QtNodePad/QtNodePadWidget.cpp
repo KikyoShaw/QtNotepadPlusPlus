@@ -52,6 +52,8 @@ QtNodePad::QtNodePad(QWidget *parent)
 
 	//操作
 	connect(ui.mainTextEdit, &QPlainTextEdit::selectionChanged, this, &QtNodePad::sltPlainTextEdiSelectionChanged);
+	connect(ui.mainTextEdit, &QPlainTextEdit::textChanged, this, &QtNodePad::sltPlainTextEditTextChanged);
+	connect(ui.mainTextEdit, &QPlainTextEdit::undoAvailable, this, &QtNodePad::sltPlainTextEditUndoAvailable);
 
 	connect(ui.action_N, &QAction::triggered, this, &QtNodePad::sltActionNewCreate);
 	connect(ui.action_W, &QAction::triggered, this, &QtNodePad::sltActionCreateWindow);
@@ -187,6 +189,19 @@ void QtNodePad::createFindDialog()
 	});
 }
 
+void QtNodePad::sltPlainTextEditTextChanged()
+{
+	if (fileName.isEmpty())
+		fileName = "无标题";
+	updateWindowTitle();
+
+	bool empty = ui.mainTextEdit->toPlainText().isEmpty();
+	ui.action_F_2->setEnabled(!empty);
+	ui.action_R_2->setEnabled(!empty);
+	ui.action_N_2->setEnabled(!empty && m_findDialog && m_findDialog->isVisible());
+	ui.action_V->setEnabled(!empty && m_findDialog && m_findDialog->isVisible());
+}
+
 void QtNodePad::sltPlainTextEdiSelectionChanged()
 {
 	bool selected = ui.mainTextEdit->textCursor().hasSelection();
@@ -195,6 +210,11 @@ void QtNodePad::sltPlainTextEdiSelectionChanged()
 	ui.action_T->setEnabled(selected);
 	ui.action_L->setEnabled(selected);
 	/*ui->actionReselect_Chinese->setEnabled(selected);*/
+}
+
+void QtNodePad::sltPlainTextEditUndoAvailable(bool ava)
+{
+	ui.action_U_2->setEnabled(ava);
 }
 
 void QtNodePad::sltActionNewCreate()
