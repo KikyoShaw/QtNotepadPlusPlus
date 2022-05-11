@@ -73,7 +73,6 @@ QtNodePad::QtNodePad(QWidget *parent)
 	connect(ui.action_O, &QAction::triggered, this, &QtNodePad::sltActionOpenFile);
 	connect(ui.action_S, &QAction::triggered, this, &QtNodePad::sltActionSaveText);
 	connect(ui.action_A, &QAction::triggered, this, &QtNodePad::sltActionSaveOther);
-	connect(ui.action_C, &QAction::triggered, this, &QtNodePad::sltActionExit);
 	connect(ui.action_R, &QAction::triggered, this, &QtNodePad::sltActionRename);
 
 	connect(ui.action_U_2, &QAction::triggered, this, &QtNodePad::sltActionUndo);
