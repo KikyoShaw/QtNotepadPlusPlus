@@ -433,6 +433,9 @@
    </property>
   </action>
   <action name="action_Unicode_S">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>显示Unicode控制字符(&amp;S)</string>
    </property>
