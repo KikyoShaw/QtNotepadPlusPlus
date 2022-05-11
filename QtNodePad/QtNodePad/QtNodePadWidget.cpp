@@ -8,6 +8,8 @@
 #include <QTextBlock>
 #include <QDateTime>
 #include <QFontDialog>
+#include <QPrintDialog>
+#include <QPageSetupDialog>
 #include "FindDialog.h"
 #include "RenameDialog.h"
 
@@ -90,7 +92,9 @@ QtNodePad::QtNodePad(QWidget *parent)
 	connect(ui.action_W_2, &QAction::triggered, this, &QtNodePad::sltActionWrap);
 	connect(ui.action_F_3, &QAction::triggered, this, &QtNodePad::sltActionFontHandle);
 	connect(ui.action_F, &QAction::triggered, this, &QtNodePad::sltActionOpenFolder);
-
+	connect(ui.action_P, &QAction::triggered, this, &QtNodePad::sltActionPrinter);
+	connect(ui.action_U, &QAction::triggered, this, &QtNodePad::sltActionPageSetup);
+	
 	connect(ui.action_I, &QAction::triggered, this, &QtNodePad::sltActionZoomIn);
 	connect(ui.action_O_2, &QAction::triggered, this, &QtNodePad::sltActionZoomOut);
 	connect(ui.action_R_4, &QAction::triggered, this, &QtNodePad::sltActionZoomDefault);
@@ -403,6 +407,22 @@ void QtNodePad::sltActionOpenFolder()
 	QString pathStr = filePath.replace("/", "\\");
 	QString cmd = QString("explorer.exe /select,\"%1\"").arg(pathStr);
 	QProcess::startDetached(cmd);
+}
+
+void QtNodePad::sltActionPrinter()
+{
+	if (m_printDialog == nullptr) {
+		m_printDialog = new QPrintDialog(&Printer);
+	}
+	m_printDialog->exec();
+}
+
+void QtNodePad::sltActionPageSetup()
+{
+	if (m_pageSetupDialog == nullptr) {
+		m_pageSetupDialog = new QPageSetupDialog(&Printer);
+	}
+	m_pageSetupDialog->exec();
 }
 
 void QtNodePad::sltActionUndo()

@@ -5,10 +5,13 @@
 #include <QtWidgets/QMainWindow>
 #include <QLabel>
 #include <QSettings>
+#include <QPrinter>
 #include "ui_QtNodePadWidget.h"
 
 class FindDialog;
 class RenameDialog;
+class QPrintDialog;
+class QPageSetupDialog;
 
 class QtNodePad : public QMainWindow
 {
@@ -55,6 +58,10 @@ private slots:
 	void sltActionRename();
 	//打开所在文件夹
 	void sltActionOpenFolder();
+	//打印
+	void sltActionPrinter();
+	//页面设置
+	void sltActionPageSetup();
 
 	//撤销
 	void sltActionUndo();
@@ -132,4 +139,10 @@ private:
 	FindDialog* m_findDialog = nullptr;
 	//重命名控件
 	RenameDialog *m_renameDialog = nullptr;
+	//打印机对象
+	QPrinter Printer;
+	//打印机界面
+	QPrintDialog *m_printDialog = nullptr;
+	//页面面设置
+	QPageSetupDialog *m_pageSetupDialog = nullptr;
 };
