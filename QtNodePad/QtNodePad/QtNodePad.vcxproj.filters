@@ -46,6 +46,9 @@
     <ClCompile Include="RenameDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GotoDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="FindDialog.h">
@@ -54,12 +57,18 @@
     <QtMoc Include="RenameDialog.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="GotoDialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="FindDialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="RenameDialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="GotoDialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

@@ -330,7 +330,7 @@
   </action>
   <action name="action_G_2">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>转到(&amp;G)</string>

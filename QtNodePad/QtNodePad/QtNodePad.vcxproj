@@ -85,9 +85,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GotoDialog.cpp" />
     <ClCompile Include="RenameDialog.cpp" />
     <QtRcc Include="QtNodePad.qrc" />
     <QtUic Include="FindDialog.ui" />
+    <QtUic Include="GotoDialog.ui" />
     <QtUic Include="QtNodePadWidget.ui" />
     <QtMoc Include="QtNodePadWidget.h" />
     <ClCompile Include="FindDialog.cpp" />
@@ -100,6 +102,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="RenameDialog.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="GotoDialog.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

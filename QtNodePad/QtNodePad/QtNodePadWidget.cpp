@@ -10,6 +10,7 @@
 #include <QFontDialog>
 #include <QPrintDialog>
 #include <QPageSetupDialog>
+#include "GotoDialog.h"
 #include "FindDialog.h"
 #include "RenameDialog.h"
 
@@ -93,6 +94,7 @@ QtNodePad::QtNodePad(QWidget *parent)
 	connect(ui.action_F, &QAction::triggered, this, &QtNodePad::sltActionOpenFolder);
 	connect(ui.action_P, &QAction::triggered, this, &QtNodePad::sltActionPrinter);
 	connect(ui.action_U, &QAction::triggered, this, &QtNodePad::sltActionPageSetup);
+	connect(ui.action_G_2, &QAction::triggered, this, &QtNodePad::sltActionGoto);
 	
 	connect(ui.action_I, &QAction::triggered, this, &QtNodePad::sltActionZoomIn);
 	connect(ui.action_O_2, &QAction::triggered, this, &QtNodePad::sltActionZoomOut);
@@ -258,11 +260,11 @@ void QtNodePad::sltPlainTextEditCursorPositionChanged()
 
 	QTextLayout* ly = tc.block().layout();
 	int posInBlock = tc.position() - tc.block().position(); // 当前光标在block内的相对位置
-	int line = ly->lineForTextPosition(posInBlock).lineNumber() + tc.block().firstLineNumber();
+	int row = ly->lineForTextPosition(posInBlock).lineNumber() + tc.block().firstLineNumber();
 
 	int col = tc.columnNumber(); // 第几列
 	// int row = tc.blockNumber(); // 第几段，无法识别WordWrap的第几行
-	m_posLabel->setText("第 " + QString::number(line + 1) + " 行，第 " + QString::number(col + 1) + " 列");
+	m_posLabel->setText("第 " + QString::number(row + 1) + " 行，第 " + QString::number(col + 1) + " 列");
 }
 
 void QtNodePad::sltPlainTextEditCustomContextMenuRequested(const QPoint & p)
@@ -512,6 +514,28 @@ void QtNodePad::sltActionFindPrev()
 	}
 }
 
+void QtNodePad::sltActionGoto()
+{
+	if (m_gotoDialog == nullptr) {
+		m_gotoDialog = new GotoDialog(this);
+		connect(m_gotoDialog, &GotoDialog::signalGoto, this, [=](int row) {
+			if (row == 0) {
+				QMessageBox::warning(this, "转到指定行", "请输入正确的跳转行数！");
+				return;
+			}
+			int _row = ui.mainTextEdit->document()->lineCount();
+			if (row > _row) {
+				QMessageBox::warning(this, "转到指定行", "行数超过了总行数！");
+				return;
+			}
+
+			gotoRow(row);
+			m_gotoDialog->close();
+		});
+	}
+	m_gotoDialog->showGotoDialog();
+}
+
 void QtNodePad::sltActionReplace()
 {
 	if (!m_findDialog)
@@ -700,4 +724,12 @@ bool QtNodePad::saveFile()
 	file.close();
 	updateWindowTitle();
 	return true;
+}
+
+void QtNodePad::gotoRow(int row)
+{
+	QTextCursor tc = ui.mainTextEdit->textCursor();
+	int position = ui.mainTextEdit->document()->findBlockByNumber(row - 1).position();
+	tc.setPosition(position, QTextCursor::MoveAnchor);
+	ui.mainTextEdit->setTextCursor(tc);
 }

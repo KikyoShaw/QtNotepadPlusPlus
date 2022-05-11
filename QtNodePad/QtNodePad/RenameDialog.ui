@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>532</width>
-    <height>82</height>
+    <width>520</width>
+    <height>80</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>520</width>
+    <height>80</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>520</width>
+    <height>80</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>重命名</string>

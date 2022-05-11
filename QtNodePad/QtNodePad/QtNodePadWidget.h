@@ -12,6 +12,7 @@ class FindDialog;
 class RenameDialog;
 class QPrintDialog;
 class QPageSetupDialog;
+class GotoDialog;
 
 class QtNodePad : public QMainWindow
 {
@@ -33,6 +34,8 @@ private:
 	void createFindDialog();
 	//文件保存
 	bool saveFile();
+	//跳转到指定行
+	void gotoRow(int row);
 
 private slots:
 	//文本内容操作
@@ -82,6 +85,8 @@ private slots:
 	void sltActionFindNext();
 	//上一个
 	void sltActionFindPrev();
+	//转到
+	void sltActionGoto();
 
 	//替换
 	void sltActionReplace();
@@ -141,6 +146,8 @@ private:
 	FindDialog* m_findDialog = nullptr;
 	//重命名控件
 	RenameDialog *m_renameDialog = nullptr;
+	//跳转界面
+	GotoDialog *m_gotoDialog = nullptr;
 	//打印机对象
 	QPrinter Printer;
 	//打印机界面
