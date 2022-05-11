@@ -106,6 +106,7 @@ QtNodePad::QtNodePad(QWidget *parent)
 	connect(ui.action_H, &QAction::triggered, this, &QtNodePad::sltActionHelp);
 	connect(ui.action_F_4, &QAction::triggered, this, &QtNodePad::sltActionGithub);
 	connect(ui.action_A_3, &QAction::triggered, this, &QtNodePad::sltActionAboutNotePad);
+	connect(ui.action_X, &QAction::triggered, this, &QtNodePad::sltActionExit);
 }
 
 QtNodePad::~QtNodePad()
