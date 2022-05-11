@@ -102,7 +102,8 @@ QtNodePad::QtNodePad(QWidget *parent)
 	connect(ui.action_L_2, &QAction::triggered, this, &QtNodePad::sltActionInputHandle);
 	connect(ui.action_R_3, &QAction::triggered, this, &QtNodePad::sltActionReadHandle);
 	connect(ui.action_S_2, &QAction::triggered, this, &QtNodePad::sltActionStatus);
-
+	connect(ui.action_H_2, &QAction::triggered, this, &QtNodePad::sltChineseReElection);
+	
 	connect(ui.action_H, &QAction::triggered, this, &QtNodePad::sltActionHelp);
 	connect(ui.action_F_4, &QAction::triggered, this, &QtNodePad::sltActionGithub);
 	connect(ui.action_A_3, &QAction::triggered, this, &QtNodePad::sltActionAboutNotePad);
@@ -630,6 +631,14 @@ void QtNodePad::sltActionStatus()
 		ui.action_S_2->setChecked(false);
 		m_settings.setValue("statusBar", false);
 	}
+}
+
+void QtNodePad::sltChineseReElection()
+{
+	//QTextCursor cursor = ui.mainTextEdit->textCursor();
+	//cursor.movePosition(QTextCursor::End);
+	//ui.mainTextEdit->setTextCursor(cursor);
+	ui.mainTextEdit->moveCursor(QTextCursor::EndOfBlock, QTextCursor::MoveAnchor);
 }
 
 void QtNodePad::sltActionHelp()

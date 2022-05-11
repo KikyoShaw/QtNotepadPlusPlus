@@ -107,6 +107,8 @@ private slots:
 	void sltActionReadHandle();
 	//底部工具栏
 	void sltActionStatus();
+	//汉字重选
+	void sltChineseReElection();
 
 	//帮助
 	void sltActionHelp();
