@@ -679,7 +679,6 @@ void QtNodePad::sltActionToUpper()
 	auto text = ui.mainTextEdit->textCursor().selectedText().toUpper();
 	ui.mainTextEdit->textCursor().removeSelectedText();
 	ui.mainTextEdit->insertPlainText(text);
-	ui.mainTextEdit->
 }
 
 void QtNodePad::sltActionToLower()
