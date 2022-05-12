@@ -10,6 +10,7 @@
 #include <QFontDialog>
 #include <QPrintDialog>
 #include <QPageSetupDialog>
+#include <QTextCodec>
 #include "GotoDialog.h"
 #include "FindDialog.h"
 #include "RenameDialog.h"
@@ -136,10 +137,15 @@ void QtNodePad::openFile(const QString & path)
 		fileName = QFileInfo(path).baseName();
 
 		// 读取文件
-		if (!file.open(QIODevice::ReadOnly))
+		if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
 			return;
 
-		savedContent = QString::fromLocal8Bit(file.readAll());
+		QTextStream toText(&file);
+		toText.setCodec("GBK");//设置文件流编码方式
+
+		//savedContent = QString::fromLocal8Bit(file.readAll());
+		//savedContent = QTextCodec::codecForName("GBK")->toUnicode(file.readAll());
+		savedContent = toText.readAll();
 	}
 	ui.mainTextEdit->setPlainText(savedContent);
 	updateWindowTitle();
