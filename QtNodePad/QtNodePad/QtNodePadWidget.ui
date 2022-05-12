@@ -139,6 +139,9 @@
     <addaction name="separator"/>
     <addaction name="action_U_3"/>
     <addaction name="action_L_3"/>
+    <addaction name="separator"/>
+    <addaction name="actionUnicode"/>
+    <addaction name="actionGB2312_GBK"/>
    </widget>
    <addaction name="menu_F"/>
    <addaction name="menu_E"/>
@@ -495,6 +498,28 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+L</string>
+   </property>
+  </action>
+  <action name="actionUnicode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Unicode字符集</string>
+   </property>
+  </action>
+  <action name="actionGB2312_GBK">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>GB2312/GBK字符集</string>
    </property>
   </action>
  </widget>

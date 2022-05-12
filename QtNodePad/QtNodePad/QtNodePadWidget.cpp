@@ -107,6 +107,9 @@ QtNodePad::QtNodePad(QWidget *parent)
 	connect(ui.action_H_2, &QAction::triggered, this, &QtNodePad::sltChineseReElection);
 	connect(ui.action_U_3, &QAction::triggered, this, &QtNodePad::sltActionToUpper);
 	connect(ui.action_L_3, &QAction::triggered, this, &QtNodePad::sltActionToLower);
+
+	connect(ui.actionUnicode, &QAction::triggered, this, &QtNodePad::sltActionToUnicode);
+	connect(ui.actionGB2312_GBK, &QAction::triggered, this, &QtNodePad::sltActionToGB);
 	
 	connect(ui.action_H, &QAction::triggered, this, &QtNodePad::sltActionHelp);
 	connect(ui.action_F_4, &QAction::triggered, this, &QtNodePad::sltActionGithub);
@@ -243,6 +246,8 @@ void QtNodePad::sltPlainTextEditTextChanged()
 	bool empty = ui.mainTextEdit->toPlainText().isEmpty();
 	ui.action_F_2->setEnabled(!empty);
 	ui.action_R_2->setEnabled(!empty);
+	ui.actionUnicode->setEnabled(!empty);
+	ui.actionGB2312_GBK->setEnabled(!empty);
 	ui.action_N_2->setEnabled(!empty && m_findDialog && m_findDialog->isVisible());
 	ui.action_V->setEnabled(!empty && m_findDialog && m_findDialog->isVisible());
 }
@@ -694,6 +699,39 @@ void QtNodePad::sltActionToLower()
 	ui.mainTextEdit->insertPlainText(text);
 }
 
+static QString _oldUnicode = "";
+void QtNodePad::sltActionToUnicode()
+{
+	if (ui.actionUnicode->isChecked()) {
+		_oldUnicode = ui.mainTextEdit->toPlainText();
+		auto text = ui.mainTextEdit->toPlainText().toUtf8().toHex().toUpper();
+		ui.mainTextEdit->clear();
+		ui.mainTextEdit->insertPlainText(text);
+	}
+	else
+	{
+		ui.mainTextEdit->clear();
+		ui.mainTextEdit->insertPlainText(_oldUnicode);
+	}
+}
+
+static QString _oldGB = "";
+void QtNodePad::sltActionToGB()
+{
+	if (ui.actionGB2312_GBK->isChecked()) {
+		_oldGB = ui.mainTextEdit->toPlainText();
+		auto text = ui.mainTextEdit->toPlainText().toLocal8Bit().toHex().toUpper();
+		ui.mainTextEdit->clear();
+		ui.mainTextEdit->insertPlainText(text);
+	}
+	else
+	{
+		ui.mainTextEdit->clear();
+		ui.mainTextEdit->insertPlainText(_oldGB);
+	}
+	
+}
+
 void QtNodePad::sltActionHelp()
 {
 	QDesktopServices::openUrl(QUrl("https://github.com/KikyoShaw/QtNotepadPlusPlus"));
@@ -762,4 +800,35 @@ void QtNodePad::gotoRow(int row)
 	int position = ui.mainTextEdit->document()->findBlockByNumber(row - 1).position();
 	tc.setPosition(position, QTextCursor::MoveAnchor);
 	ui.mainTextEdit->setTextCursor(tc);
+}
+
+QString QtNodePad::unicodeToString(const QString & str)
+{
+	int temp[400];
+
+	QChar qchar[100];
+
+	QString strOut;
+
+	bool ok;
+
+	int count = str.count();
+
+	int len = count / 4;
+
+	for (int i = 0; i < count; i += 4)
+
+	{
+
+		temp[i] = str.mid(i, 4).toInt(&ok, 16);//每四位转化为16进制整型
+
+		qchar[i / 4] = temp[i];
+
+		QString str0(qchar, len);
+
+		strOut = str0;
+
+	}
+
+	return strOut;
 }

@@ -37,6 +37,8 @@ private:
 	//跳转到指定行
 	void gotoRow(int row);
 
+	QString unicodeToString(const QString &str);
+
 private slots:
 	//文本内容操作
 	void sltPlainTextEditTextChanged();
@@ -119,6 +121,10 @@ private slots:
 	void sltActionToUpper();
 	//转成小写
 	void sltActionToLower();
+	//Unicode字符集
+	void sltActionToUnicode();
+	//GB2312/GBK字符集
+	void sltActionToGB();
 
 	//帮助
 	void sltActionHelp();
