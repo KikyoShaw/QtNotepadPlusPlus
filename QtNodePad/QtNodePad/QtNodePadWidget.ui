@@ -136,6 +136,9 @@
     <addaction name="action_S_2"/>
     <addaction name="action_L_2"/>
     <addaction name="action_H_2"/>
+    <addaction name="separator"/>
+    <addaction name="action_U_3"/>
+    <addaction name="action_L_3"/>
    </widget>
    <addaction name="menu_F"/>
    <addaction name="menu_E"/>
@@ -470,6 +473,28 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+0</string>
+   </property>
+  </action>
+  <action name="action_U_3">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>转成大写(&amp;U)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+U</string>
+   </property>
+  </action>
+  <action name="action_L_3">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>转成小写(&amp;L)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
    </property>
   </action>
  </widget>

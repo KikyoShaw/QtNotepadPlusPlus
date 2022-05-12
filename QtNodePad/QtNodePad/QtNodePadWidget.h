@@ -115,6 +115,11 @@ private slots:
 	//汉字重选
 	void sltChineseReElection();
 
+	//转成大写
+	void sltActionToUpper();
+	//转成小写
+	void sltActionToLower();
+
 	//帮助
 	void sltActionHelp();
 	//主页

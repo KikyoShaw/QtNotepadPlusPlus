@@ -104,6 +104,8 @@ QtNodePad::QtNodePad(QWidget *parent)
 	connect(ui.action_R_3, &QAction::triggered, this, &QtNodePad::sltActionReadHandle);
 	connect(ui.action_S_2, &QAction::triggered, this, &QtNodePad::sltActionStatus);
 	connect(ui.action_H_2, &QAction::triggered, this, &QtNodePad::sltChineseReElection);
+	connect(ui.action_U_3, &QAction::triggered, this, &QtNodePad::sltActionToUpper);
+	connect(ui.action_L_3, &QAction::triggered, this, &QtNodePad::sltActionToLower);
 	
 	connect(ui.action_H, &QAction::triggered, this, &QtNodePad::sltActionHelp);
 	connect(ui.action_F_4, &QAction::triggered, this, &QtNodePad::sltActionGithub);
@@ -247,6 +249,8 @@ void QtNodePad::sltPlainTextEdiSelectionChanged()
 	ui.action_T->setEnabled(selected);
 	ui.action_L->setEnabled(selected);
 	ui.action_H_2->setEnabled(selected);
+	ui.action_U_3->setEnabled(selected);
+	ui.action_L_3->setEnabled(selected);
 }
 
 void QtNodePad::sltPlainTextEditUndoAvailable(bool ava)
@@ -662,6 +666,27 @@ void QtNodePad::sltChineseReElection()
 	//cursor.movePosition(QTextCursor::End);
 	//ui.mainTextEdit->setTextCursor(cursor);
 	ui.mainTextEdit->moveCursor(QTextCursor::EndOfBlock, QTextCursor::MoveAnchor);
+}
+
+void QtNodePad::sltActionToUpper()
+{
+	//QTextCursor tc = ui.mainTextEdit->textCursor();
+	//auto text = tc.selectedText().toUpper();
+	//tc.removeSelectedText();
+	//ui.mainTextEdit->insertPlainText(text);
+	//tc.setPosition(ui.mainTextEdit->toPlainText().length());
+	//ui.mainTextEdit->setTextCursor(tc);
+	auto text = ui.mainTextEdit->textCursor().selectedText().toUpper();
+	ui.mainTextEdit->textCursor().removeSelectedText();
+	ui.mainTextEdit->insertPlainText(text);
+	ui.mainTextEdit->
+}
+
+void QtNodePad::sltActionToLower()
+{
+	auto text = ui.mainTextEdit->textCursor().selectedText().toLower();
+	ui.mainTextEdit->textCursor().removeSelectedText();
+	ui.mainTextEdit->insertPlainText(text);
 }
 
 void QtNodePad::sltActionHelp()
