@@ -133,9 +133,14 @@ private slots:
 	//¹ØÓÚ
 	void sltActionAboutNotePad();
 
+	void openFileAt(QString fileName, int tabIndex);
+	void dragTab(int tabIndex);
+
 protected:
 	virtual void showEvent(QShowEvent* e) override;
 	virtual void closeEvent(QCloseEvent* e) override;
+	virtual void dragEnterEvent(QDragEnterEvent *event) override;
+	virtual void dropEvent(QDropEvent *event) override;
 
 private:
     Ui::QtNodePadClass ui;

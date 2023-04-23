@@ -11,9 +11,16 @@
 #include <QPrintDialog>
 #include <QPageSetupDialog>
 #include <QTextCodec>
+#include <QDrag>
+#include <QMimeData>
+#include <QScreen>
+#include <QWindow>
+#include <QTextBrowser>
+#include "dndtabwidget.h"
 #include "GotoDialog.h"
 #include "FindDialog.h"
 #include "RenameDialog.h"
+
 
 QtNodePad::QtNodePad(QWidget *parent)
     : QMainWindow(parent)
@@ -115,6 +122,13 @@ QtNodePad::QtNodePad(QWidget *parent)
 	connect(ui.action_F_4, &QAction::triggered, this, &QtNodePad::sltActionGithub);
 	connect(ui.action_A_3, &QAction::triggered, this, &QtNodePad::sltActionAboutNotePad);
 	connect(ui.action_X, &QAction::triggered, this, &QtNodePad::sltActionExit);
+
+	//分页和拖拽
+	/*auto tabWidget = new DnDTabWidget(this);
+	setCentralWidget(tabWidget);
+	setAcceptDrops(true);
+	connect(tabWidget, &DnDTabWidget::openFileRequest, this, &QtNodePad::openFileAt);
+	connect(tabWidget, &DnDTabWidget::dragTabRequest, this, &QtNodePad::dragTab);*/
 }
 
 QtNodePad::~QtNodePad()
@@ -157,6 +171,69 @@ void QtNodePad::openFile(const QString & path)
 bool QtNodePad::isModified() const
 {
 	return ui.mainTextEdit->toPlainText() != savedContent;
+}
+
+//创建tab分页
+void QtNodePad::dragTab(int tabIndex)
+{
+	auto tabWidget = qobject_cast<DnDTabWidget*>(centralWidget());
+	Q_ASSERT(tabWidget);
+	auto browser = qobject_cast<QTextBrowser*>(tabWidget->widget(tabIndex));
+	Q_ASSERT(browser);
+
+	auto drag = new QDrag(this);
+	auto mimeData = new QMimeData;
+	QPixmap thumbnail = windowHandle()->screen()->grabWindow(browser->winId());
+	mimeData->setUrls({ browser->source() });
+	drag->setMimeData(mimeData);
+	drag->setPixmap(thumbnail.scaled(200, 200));
+
+	auto dragAction = drag->exec(Qt::LinkAction);
+	int currentIndex = tabWidget->indexOf(browser);
+	if (dragAction == Qt::LinkAction) {
+		tabWidget->removeTabActually(currentIndex);
+	}
+	else if (dragAction == Qt::IgnoreAction) {
+		if (QProcess::startDetached(qApp->applicationFilePath(),
+			{ "-x",QString::number(QCursor::pos().x()),
+			 "-y",QString::number(QCursor::pos().y()),
+			browser->source().toLocalFile() })) {
+			tabWidget->removeTabActually(currentIndex);
+		}
+	}
+	else {
+		return;
+	}
+	if (tabWidget->count() == 0) {
+		qApp->closeAllWindows();
+	}
+}
+
+void QtNodePad::openFileAt(QString fileName, int tabIndex)
+{
+	QFile file(fileName);
+	if (!file.open(QFile::ReadOnly | QFile::Text))
+	{
+		QMessageBox::warning(this, tr("Error"),
+			tr("Cannot open file %1:\n%2").arg(fileName).arg(file.errorString()));
+		return;
+	}
+	QTextStream in(&file);
+	in.setAutoDetectUnicode(true);
+
+	auto browser = new QTextBrowser(this);
+	auto tabWidget = qobject_cast<DnDTabWidget*>(centralWidget());
+	Q_ASSERT(tabWidget);
+	auto index = tabWidget->insertTab(tabIndex, browser, QFileInfo(fileName).baseName());
+	tabWidget->setCurrentIndex(index);
+
+	browser->setAcceptDrops(false);
+	QGuiApplication::setOverrideCursor(Qt::WaitCursor);
+	browser->setSource(QUrl::fromLocalFile(fileName));
+	browser->setPlainText(in.readAll());
+	QGuiApplication::restoreOverrideCursor();
+
+	file.close();
 }
 
 void QtNodePad::updateWindowTitle()
@@ -766,6 +843,27 @@ void QtNodePad::closeEvent(QCloseEvent * e)
 	m_settings.setValue("QtNodePad/state", this->saveState());
 
 	QMainWindow::closeEvent(e);
+}
+
+void QtNodePad::dragEnterEvent(QDragEnterEvent * event)
+{
+	if (event->mimeData()->hasUrls())
+		event->acceptProposedAction();
+	else event->ignore();
+}
+
+void QtNodePad::dropEvent(QDropEvent * event)
+{
+	const QMimeData * mimeData = event->mimeData();
+	if (mimeData->hasUrls()) {
+		for (const QUrl& url : mimeData->urls()) {
+			openFile(url.toLocalFile());
+		}
+		event->acceptProposedAction();
+	}
+	else {
+		event->ignore();
+	}
 }
 
 bool QtNodePad::saveFile()
